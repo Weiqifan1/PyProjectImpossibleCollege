@@ -30,3 +30,5 @@ Hvis tekst på grå gennemsigtig baggrund.
 https://www.youtube.com/watch?v=Zw9OKRp2fZQ  
 
 https://www.kerrickstaley.com/2017/05/29/extracting-chinese-subs-part-1  
+https://softwarerecs.stackexchange.com/questions/7521/program-that-can-extract-subtitles-from-hard-subbed-videos  
+
