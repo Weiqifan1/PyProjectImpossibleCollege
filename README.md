@@ -28,3 +28,5 @@ https://www.youtube.com/watch?v=nfMSjCeY9UA
 
 Hvis tekst på grå gennemsigtig baggrund.  
 https://www.youtube.com/watch?v=Zw9OKRp2fZQ  
+
+https://www.kerrickstaley.com/2017/05/29/extracting-chinese-subs-part-1  
