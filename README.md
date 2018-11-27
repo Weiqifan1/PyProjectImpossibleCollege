@@ -1,7 +1,8 @@
 # PyProjectImpossibleCollege
-Dette er eksamensprojektet for team Impossible College - Bo, Anders, Christian
+Dette er eksamensprojektet for team Impossible College - Bo Henriksen, Anders Nissen og Christian Lykke
 
 2018-11-27
+
 Projektet går ud på at læse eksisterende undertekster i videoer.
 Første skridt: vi vælger et simpelt undertekst format med dansk eller engelsk tekst, og ser om vi kan skrve et program der kan læse underteksten ud fra videoens pixels.
 Til dette skridt har vi foruddefineret hvilket alfabet/sprog programmet skal lede efter, og vi fortæller programmet hvilket format det skal lede efter. Det vil sige at vi f.eks. fortæller programmet at den kan finde underteksten omkrandset af sorte rektangler i bunden af skærmen.
