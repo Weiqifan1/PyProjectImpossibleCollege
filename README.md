@@ -29,6 +29,7 @@ https://www.youtube.com/watch?v=nfMSjCeY9UA
 Hvis tekst på grå gennemsigtig baggrund.  
 https://www.youtube.com/watch?v=Zw9OKRp2fZQ  
 
+https://docs.opencv.org/3.4/db/d5c/tutorial_py_bg_subtraction.html  
 https://www.kerrickstaley.com/2017/05/29/extracting-chinese-subs-part-1  
 https://softwarerecs.stackexchange.com/questions/7521/program-that-can-extract-subtitles-from-hard-subbed-videos  
 
