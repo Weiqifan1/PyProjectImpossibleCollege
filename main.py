@@ -6,7 +6,9 @@ import argparse
 import cv2
 import os
 
-image = cv2.imread("pic/pic1WonB.png")
+#image = cv2.imread("pic/pic1WonB.png")
+image = cv2.imread("pic/pic2W.jpg")
+
 imagecopy1 = image.copy()
 imagecopy2 = image.copy()
 
@@ -76,19 +78,22 @@ gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
 gray = cv2.threshold(gray, 0, 255,cv2.THRESH_OTSU)[1]
 
 #pytesseract delen
-filename = "tess.png".format(os.getpid())
+filename = "test_results/tess.png".format(os.getpid())
 cv2.imwrite(filename, gray)
 text = pytesseract.image_to_string(Image.open(filename))
 
 #os.remove(filename)
 print(text)
+file = open("test_results/textfile.txt","w") 
+file.write(text) 
+file.close() 
 
 cv2.imshow('imagecopy1',imagecopy1)
 cv2.imshow('cropped image',gray)
 
 #cv2.imshow('mask',mask) 
 cv2.waitKey(0)
-filename = "chr.png".format(os.getpid())
+filename = "test_results/chr.png".format(os.getpid())
 cv2.imwrite(filename, mask)
 
 
