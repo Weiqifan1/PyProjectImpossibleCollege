@@ -1,5 +1,9 @@
 import numpy as np
 import cv2 
+import pytesseract # pip install pytesseract
+
+# opencv and tesser ocr
+# https://docs.opencv.org/3.0-beta/modules/text/doc/ocr.html
 
 # download movie from youtube. Just give it the path.
 # https://video.genyoutube.net/86d7jx2YB0Y
@@ -38,7 +42,7 @@ while(1):
     cv2.imshow('end', closing_stepwise)
     #cv2.imshow('threshold', thresh) # Ikke rigtig nogen forskel.
     #cv2.imshow('dilate', dilate) # Hele teksten bliver hvid, og bogstaverne går over i hinanden.
-    
+    print(pytesseract.image_to_string(fgmask))
 
     k = cv2.waitKey(30) & 0xff
     if k == 27:
