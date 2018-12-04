@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-import pytesseract # pip install pytesseract # Skal med i dokumentation, og miljø variabel.
+import pytesseract 
 import argparse
 import cv2
 import os
@@ -19,7 +19,7 @@ while(1):
 
     ret, frame = cap.read()
 
-    # cropped = frame[283:600, 100:600]
+    #cropped = frame[283:600, 100:600]
 
     # fgmask = fgbg.apply(frame)
     
