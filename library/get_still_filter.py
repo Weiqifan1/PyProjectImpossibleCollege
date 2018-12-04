@@ -97,9 +97,10 @@ def video(image_path, color_range_hsv):
 def read_pic_save_text(black_white_text_pic, pic_path, txt_path):
     filename = pic_path.format(os.getpid())
     cv2.imwrite(filename, black_white_text_pic)
-    text = pytesseract.image_to_string(Image.open(filename))
+    # Sæt sprog her.
+    text = pytesseract.image_to_string(Image.open(filename), lang="dan")
     os.remove(filename)
 
-    file = open(txt_path, "w")
+    file = open(txt_path, "w", encoding="utf-8")
     file.write(text)
     file.close()
