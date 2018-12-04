@@ -1,4 +1,3 @@
-
 import numpy as np
 from PIL import Image
 import pytesseract
@@ -70,14 +69,3 @@ def read_pic_save_text(black_white_text_pic, pic_path, txt_path):
     file = open(txt_path,"w") 
     file.write(text) 
     file.close() 
-
-
-
-
-
-
-
-
-
-
-#end
