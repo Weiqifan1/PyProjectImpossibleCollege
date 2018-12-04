@@ -15,6 +15,20 @@ Vi forestiller os at bruge eksisterende projekter på github, som har en licens 
 
 Vi sørger for at de kodeafsnit vi ikke selv har skrevet nemt kan identificeres.
 
+### 1. iteration genkendelse af tekst på billeder og frames
+Genkendelse af tekster og fjernelse af støj fra billede.  
+https://github.com/Weiqifan1/PyProjectImpossibleCollege/tree/chr181202b  
+
+Genkendelse af undertekst fra frames og skriv det til en fil.  
+https://github.com/Weiqifan1/PyProjectImpossibleCollege/tree/fors%C3%B8g  
+
+### 2. iteration
+Fjerne resten af støjen fra et (video)billedet.  
+Gem tekstfilen rigtigt.  
+Se om de enkelte frames ændrer sig, og genkend kun tekst når framen har ændret sig.  
+Refrakturering.  
+Oversæt underteksten live.  
+
 Videoer.  
 Hvid tekst på sort baggrund.  
 https://www.youtube.com/watch?v=86d7jx2YB0Y  
