@@ -6,21 +6,21 @@ import cv2
 import os
 from library import get_still_filter
 
-# image = cv2.imread("pic/pic1WonB.png")
+image = cv2.imread("pic/pic2W.jpg")
 
-# crop = get_still_filter.text_image_black_white("pic/pic1WonB.png", [[0,0,255],[255,255,255]])
-# chrsave = get_still_filter.read_pic_save_text(crop,"test_results/mypic.png" ,"test_results/mynew.txt")
+crop = get_still_filter.text_image_black_white("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
+chrsave = get_still_filter.read_pic_save_text(crop,"test_results/mypic.png" ,"test_results/mynew.txt")
 
-""" print("hey")
+print("hey")
 
 cv2.imshow("crop", crop)
 cv2.imshow("image", image)
 
 cv2.waitKey(0)
 
-print("hello") """
+print("hello")
 
-
+'''
 import numpy as np
 import cv2
 # import pytesseract # pip install pytesseract
@@ -96,3 +96,7 @@ def process_frame(fgmask):
     thresh = cv2.dilate(thresh, None, iterations=2)
 
     return thresh  # , frame_delta
+'''
+
+
+#end

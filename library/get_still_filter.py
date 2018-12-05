@@ -98,6 +98,7 @@ def read_pic_save_text(black_white_text_pic, pic_path, txt_path):
     filename = pic_path.format(os.getpid())
     cv2.imwrite(filename, black_white_text_pic)
     text = pytesseract.image_to_string(Image.open(filename))
+    print(text)   ################### debug
     os.remove(filename)
 
     file = open(txt_path, "w")
