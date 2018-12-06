@@ -4,15 +4,12 @@ import pytesseract
 import cv2
 import os
 
-
-def my_function():
-    print("Hello from a function")
+# functions to get the subtitles in a txt file
 
 def read_image(image_path):
     return cv2.imread(image_path)
 
 def basic_color_mask(image, color_range_hsv):
-    #image = cv2.imread(image_path)
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     lower_white = np.array(color_range_hsv[0], dtype=np.uint8)
     upper_white = np.array(color_range_hsv[1], dtype=np.uint8)
@@ -48,7 +45,7 @@ def text_image_black_white(image, color_range_hsv):
     cv2.drawContours(image, contours, -1, 255, 3) # draw in white the contours that were founded
     c = max(contours, key=cv2.contourArea)        # find the biggest area
     x, y, w, h = cv2.boundingRect(c)
-    cv2.rectangle(dark_mask, (x, y), (x+w, y+h), (100, 100, 100), 2) # draw the contour
+    #cv2.rectangle(dark_mask, (x, y), (x+w, y+h), (100, 100, 100), 2) # draw the contour
 
     crop_img = image2[y:y+h, x:x+w]
     gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
@@ -61,8 +58,32 @@ def read_pic_save_text(black_white_clean, pic_path, txt_path):
     filename = pic_path.format(os.getpid())
     cv2.imwrite(filename, black_white_clean)
     text = pytesseract.image_to_string(Image.open(filename))
-    #os.remove(filename)
 
     file = open(txt_path, "w")
     file.write(text)
     file.close()
+
+# functions to see the subtitles in a raw (unedited) sub image:
+
+def find_subtitle_coordinates(image, color_range_hsv):
+    image2 = image.copy()
+
+    dark_mask = non_contours_to_dark(image, color_range_hsv)
+    _, contours, _ = cv2.findContours(dark_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    x = y = w = h = None
+    cv2.drawContours(image, contours, -1, 255, 3) # draw in white the contours that were founded
+    c = max(contours, key=cv2.contourArea)        # find the biggest area
+    x, y, w, h = cv2.boundingRect(c)
+    #cv2.rectangle(dark_mask, (x, y), (x+w, y+h), (100, 100, 100), 2) # draw the contour
+
+    crop_img = image2[y:y+h, x:x+w]
+    #gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
+    return crop_img#gray
+
+
+
+
+
+
+
+#end
