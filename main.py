@@ -6,15 +6,29 @@ import cv2
 import os
 from library import get_still_filter
 
+"pic1WonB.png"
+"pic2W.jpg"
+
 image = cv2.imread("pic/pic2W.jpg")
+image2 = image.copy()
 
-crop = get_still_filter.text_image_black_white("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
-chrsave = get_still_filter.read_pic_save_text(crop,"test_results/mypic.png" ,"test_results/mynew.txt")
+#crop = get_still_filter.text_image_black_white("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
+#chrsave = get_still_filter.read_pic_save_text(crop,"test_results/mypic.png" ,"test_results/mynew.txt")
+#cont = get_still_filter.white_contours("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
+cont = get_still_filter.text_image_black_white(image, [[0,0,255],[255,255,255]])
 
+_, cont = cv2.threshold(cont, 127, 255, cv2.THRESH_BINARY)
+#cont = mask
+#cont =  cv2.threshold(cont, 0, 255, cv2.THRESH_OTSU)[1]      #get_still_filter.otsu_cleaning(cont)
+
+
+
+get_still_filter.read_pic_save_text(cont, "test_results/binary.png" ,"test_results/mynew.txt")
 print("hey")
 
-cv2.imshow("crop", crop)
-cv2.imshow("image", image)
+
+#cv2.imshow("crop", crop)
+cv2.imshow("cont", cont)
 
 cv2.waitKey(0)
 
