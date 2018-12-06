@@ -12,22 +12,32 @@ from library import get_still_filter
 image = cv2.imread("pic/pic2W.jpg")
 image2 = image.copy()
 
-#crop = get_still_filter.text_image_black_white("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
-#chrsave = get_still_filter.read_pic_save_text(crop,"test_results/mypic.png" ,"test_results/mynew.txt")
-#cont = get_still_filter.white_contours("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
-cont = get_still_filter.text_image_black_white(image, [[0,0,255],[255,255,255]])
-coor_image = get_still_filter.find_subtitle_coordinates(image2, [[0,0,255],[255,255,255]])
+#####crop = get_still_filter.text_image_black_white("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
+######chrsave = get_still_filter.read_pic_save_text(crop,"test_results/mypic.png" ,"test_results/mynew.txt")
+#######cont = get_still_filter.white_contours("pic/pic2W.jpg", [[0,0,255],[255,255,255]])
 
-#_, cont = cv2.threshold(cont, 127, 255, cv2.THRESH_BINARY)
-#cont = mask
-clean_cont =  cv2.threshold(cont, 0, 255, cv2.THRESH_OTSU)[1]      #get_still_filter.otsu_cleaning(cont)
-get_still_filter.read_pic_save_text(clean_cont, "test_results/binary.png" ,"test_results/mynew.txt")
+#cont = get_still_filter.text_image_black_white(image, [[0,0,255],[255,255,255]])
+#coor_image = get_still_filter.find_subtitle_coordinates(image2, [[0,0,255],[255,255,255]])
 
+#######_, cont = cv2.threshold(cont, 127, 255, cv2.THRESH_BINARY)
+########cont = mask
 
+#clean_cont =  cv2.threshold(cont, 0, 255, cv2.THRESH_OTSU)[1]      #get_still_filter.otsu_cleaning(cont)
+#get_still_filter.read_pic_save_text(clean_cont, "test_results/binary.png" ,"test_results/mynew.txt")
 
-#cv2.imshow("crop", crop)
-cv2.imshow("cont", cont)
-cv2.imshow("sub", coor_image)
+#########################
+#skriv her nogle maader at rense billedet:
+#https://www.tutorialspoint.com/dip/optical_character_recognition.htm
+#cv2.imshow("cont", cont)
+
+cv2.imshow("grey", cv2.imread("test_results/grey.png"))
+#newotsu = cv2.threshold(cv2.imread("test_results/grey.png"), 0, 255, cv2.THRESH_OTSU)[1]
+#print(pytesseract.image_to_string(newotsu)
+
+#########################
+
+#cv2.imshow("cont", cont)
+#cv2.imshow("sub", coor_image)
 
 cv2.waitKey(0)
 
