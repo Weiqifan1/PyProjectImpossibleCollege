@@ -51,14 +51,18 @@ def text_image_black_white(image, color_range_hsv):
     gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
     return gray
 
-def otsu_cleaning(black_white_subtitle):
-    return cv2.threshold(black_white_subtitle, 0, 255, cv2.THRESH_OTSU)[1]
+def cleaning_subs(black_white_subtitle):
+    clean_cont =  cv2.threshold(black_white_subtitle, 0, 255, cv2.THRESH_OTSU)[1]
+    kernel = np.ones((2,2), np.uint8)
+    opening = cv2.morphologyEx(clean_cont, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+    return closing
 
 def read_pic_save_text(black_white_clean, pic_path, txt_path):
     filename = pic_path.format(os.getpid())
     cv2.imwrite(filename, black_white_clean)
     text = pytesseract.image_to_string(Image.open(filename))
-
+    print(text)  #debugging
     file = open(txt_path, "w")
     file.write(text)
     file.close()
