@@ -36,7 +36,9 @@ while(cap.isOpened()):
         try:
             basic = filt.basic_color_mask(frame, [[0,0,255],[255,255,255]])
             cont = filt.white_contours(basic)
-            secondIter = filt.white_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
+            #secondIter = filt.big_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
+            
+            
             #cv2.imshow("secondIter", secondIter)
             
             # her er den gamle billedbehandling
@@ -65,17 +67,17 @@ while(cap.isOpened()):
         pic_path = "book/frame_"+str(count)+"_basic.jpg"   #"pic/pic2W.jpg"
         filename = pic_path.format(os.getpid())
         cv2.imwrite(filename, basic)
-
+        
         pic_path = "book/frame_"+str(count)+"_cont.jpg"   #"pic/pic2W.jpg"
         filename = pic_path.format(os.getpid())
         cv2.imwrite(filename, cont)
         
-        pic_path = "book/frame_"+str(count)+"_secondIter.jpg"   #"pic/pic2W.jpg"
-        filename = pic_path.format(os.getpid())
-        cv2.imwrite(filename, secondIter)
+        #pic_path = "book/frame_"+str(count)+"_secondIter.jpg"   #"pic/pic2W.jpg"
+        #filename = pic_path.format(os.getpid())
+        #cv2.imwrite(filename, secondIter)
         
 
-        #stop script after 10 frames:
+        #stop script after X frames:
         if (count > 850):
             break
     

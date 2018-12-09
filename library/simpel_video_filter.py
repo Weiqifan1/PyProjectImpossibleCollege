@@ -21,25 +21,28 @@ def basic_color_mask(image, color_range_hsv):
 
 def white_contours(basic_color_mask):
     mask = basic_color_mask.copy()
+    basic2 = basic_color_mask.copy()
     # "127,255" might have to be changed if we choose a color other than white
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     for contour in contours:
         rect = cv2.boundingRect(contour)
         x, y, w, h = rect
-        cv2.rectangle(basic_color_mask, (x-5, y-5), (x+w+10, y+h+10), (255, 255, 255), 2)
-    return basic_color_mask
+        cv2.rectangle(basic2, (x-1, y-1), (x+w+5, y+h+5), (255, 255, 255), 2)
+        ## fill the rectangles with white
+        
+    return basic2
 
-def non_contours_to_dark(white_contours, color_range_hsv):
-    #image = white_contours(image, color_range_hsv)
-    image = white_contours
-    #hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    lower_color_range = np.array(color_range_hsv[0], dtype=np.uint8)
-    upper_color_range = np.array(color_range_hsv[1], dtype=np.uint8)
-    mask = cv2.inRange(image, lower_color_range, upper_color_range)
+def big_contours(white_contours):
+    mask = white_contours.copy()
+    basic2 = white_contours.copy()
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
-    return mask
-
+    _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    for contour in contours:
+        rect = cv2.boundingRect(contour)
+        x, y, w, h = rect
+        cv2.rectangle(basic2, (x-1, y-1), (x+w+2, y+h+2), (100, 100, 100), 2)
+    return basic2
 
 
 
