@@ -5,6 +5,7 @@ import argparse
 import cv2
 import os
 from library import get_still_filter
+from library import simpel_video_filter as filt
 import shutil
 
 folder = 'book'
@@ -29,21 +30,21 @@ count = 0 #count frames
 oldline = ""
 while(cap.isOpened()):
     ret, frame = cap.read()
-
-    ######
-    #time = cv2.VideoCapture.get(CV_CAP_PROP_POS_AVI_RATIO)
-    #print(time)
-    #print("\n")
-    if (count%50 == 0):
-        pic_path = "book/frame_"+str(count)+".jpg"   #"pic/pic2W.jpg"
-        filename = pic_path.format(os.getpid())
-        cv2.imwrite(filename, frame)
+    
+    if ((count%50 == 0) and (count > 650)):
 
         try:
-            cont = get_still_filter.text_image_black_white(frame, [[0,0,255],[255,255,255]])
-            clean_cont =  get_still_filter.cleaning_subs(cont)
-            text = pytesseract.image_to_string(cont, lang="dan")
+            basic = filt.basic_color_mask(frame, [[0,0,255],[255,255,255]])
+            cont = filt.white_contours(basic)
+            secondIter = filt.white_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
+            #cv2.imshow("secondIter", secondIter)
+            
+            # her er den gamle billedbehandling
+            #cont = get_still_filter.text_image_black_white(frame, [[0,0,255],[255,255,255]])
+            #clean_cont =  get_still_filter.cleaning_subs(cont)
+            #text = pytesseract.image_to_string(cont, lang="dan")
 
+            '''
             line = text+"\n"
             if line == oldline:
                 pass
@@ -53,11 +54,29 @@ while(cap.isOpened()):
                 file.write(line)
                 print("frame: "+str(count))
                 print(text)
+            '''
         except:
             pass    
+        
+        pic_path = "book/frame_"+str(count)+".jpg"   #"pic/pic2W.jpg"
+        filename = pic_path.format(os.getpid())
+        cv2.imwrite(filename, frame)
+
+        pic_path = "book/frame_"+str(count)+"_basic.jpg"   #"pic/pic2W.jpg"
+        filename = pic_path.format(os.getpid())
+        cv2.imwrite(filename, basic)
+
+        pic_path = "book/frame_"+str(count)+"_cont.jpg"   #"pic/pic2W.jpg"
+        filename = pic_path.format(os.getpid())
+        cv2.imwrite(filename, cont)
+        
+        pic_path = "book/frame_"+str(count)+"_secondIter.jpg"   #"pic/pic2W.jpg"
+        filename = pic_path.format(os.getpid())
+        cv2.imwrite(filename, secondIter)
+        
 
         #stop script after 10 frames:
-        if (count > 1000):
+        if (count > 850):
             break
     
     #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
