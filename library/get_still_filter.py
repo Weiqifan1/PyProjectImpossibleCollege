@@ -49,7 +49,7 @@ def text_image_black_white(image, color_range_hsv):
 
     crop_img = image2[y:y+h, x:x+w]
     gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
-    return gray
+    return gray ####################### debug
 
 def cleaning_subs(black_white_subtitle):
     clean_cont =  cv2.threshold(black_white_subtitle, 0, 255, cv2.THRESH_OTSU)[1]

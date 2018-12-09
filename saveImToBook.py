@@ -5,16 +5,79 @@ import argparse
 import cv2
 import os
 from library import get_still_filter
+import shutil
 
-''''
-2018-08-12
-Info:
-skriv i teminalen "python main.py" for at koere programmet.
-Skriv "q" for at stoppe programmet
-'''
+folder = 'book'
+for the_file in os.listdir(folder):
+    file_path = os.path.join(folder, the_file)
+    try:
+        if os.path.isfile(file_path):
+            os.unlink(file_path)
+        #elif os.path.isdir(file_path): shutil.rmtree(file_path)
+    except Exception as e:
+        print(e)
 
 
-print("hello")
+cap = cv2.VideoCapture('videoplayback.webm')
+
+file = open("book/book.txt", "w+")
+file.write("")
+file.close()
+file = open("book/book.txt", "a+", encoding="utf-8")#"w")
+### note end
+count = 0 #count frames
+oldline = ""
+while(cap.isOpened()):
+    ret, frame = cap.read()
+
+    ######
+    #time = cv2.VideoCapture.get(CV_CAP_PROP_POS_AVI_RATIO)
+    #print(time)
+    #print("\n")
+    if (count%50 == 0):
+        pic_path = "book/frame_"+str(count)+".jpg"   #"pic/pic2W.jpg"
+        filename = pic_path.format(os.getpid())
+        cv2.imwrite(filename, frame)
+
+        try:
+            cont = get_still_filter.text_image_black_white(frame, [[0,0,255],[255,255,255]])
+            clean_cont =  get_still_filter.cleaning_subs(cont)
+            text = pytesseract.image_to_string(cont, lang="dan")
+
+            line = text+"\n"
+            if line == oldline:
+                pass
+            else:
+                oldline = line
+                file.write("frame: "+str(count)+"\n")
+                file.write(line)
+                print("frame: "+str(count))
+                print(text)
+        except:
+            pass    
+
+        #stop script after 10 frames:
+        if (count > 1000):
+            break
+    
+    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    #cv2.imshow('frame',gray)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+    count += 1 #count frame
+
+### note start      
+file.close()
+### note end
+cap.release()
+cv2.destroyAllWindows()
+
+
+print("end")
+
+
+
 
 
 ######################################
