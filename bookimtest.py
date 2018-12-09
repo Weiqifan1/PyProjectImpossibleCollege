@@ -6,7 +6,7 @@ import argparse
 import cv2
 import os
 from library import get_still_filter
-
+#https://medium.freecodecamp.org/getting-started-with-tesseract-part-ii-f7f9a0899b3f
 "pic1WonB.png"
 "pic2W.jpg"
 #billeder med problemer:
@@ -43,9 +43,13 @@ def rens_friske_subtitles(image):
     return text
 
 def rens2(image):
-    cont = get_still_filter.text_image_black_white(image, [[0,0,255],[255,255,255]])
-    clean_cont =  get_still_filter.cleaning_subs(cont)
-    text = pytesseract.image_to_string(cont, lang="dan")
+    img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    img = cv2.resize(img, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
+    kernel = np.ones((1, 1), np.uint8)
+    img = cv2.dilate(img, kernel, iterations=1)
+    img = cv2.erode(img, kernel, iterations=1)
+    img = cv2.GaussianBlur(img, (5, 5), 0)
+    text = pytesseract.image_to_string(img, lang="dan")
     return text
 
 for chr in goodpic:

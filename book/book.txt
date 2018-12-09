@@ -1,0 +1,6 @@
+frame: 1050
+Hvor vil du hen?
+Hvad med Italien?
+frame: 1100
+Åh, gud!
+(LEGEN
