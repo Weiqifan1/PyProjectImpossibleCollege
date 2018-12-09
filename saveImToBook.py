@@ -17,6 +17,15 @@ for the_file in os.listdir(folder):
         #elif os.path.isdir(file_path): shutil.rmtree(file_path)
     except Exception as e:
         print(e)
+folder = 'book2'
+for the_file in os.listdir(folder):
+    file_path = os.path.join(folder, the_file)
+    try:
+        if os.path.isfile(file_path):
+            os.unlink(file_path)
+        #elif os.path.isdir(file_path): shutil.rmtree(file_path)
+    except Exception as e:
+        print(e)
 
 
 cap = cv2.VideoCapture('videoplayback.webm')
@@ -31,14 +40,64 @@ oldline = ""
 while(cap.isOpened()):
     ret, frame = cap.read()
     
-    if ((count%50 == 0) and (count > 650)):
+    if ((count%50 == 0) and (count > 200)):
 
+        frame1 = frame.copy()
+        frame2 = frame.copy()
+        #try:
+        basic = filt.basic_color_mask(frame1, [[0,0,255],[255,255,255]])
+        cont = filt.white_contours(basic)
+        con1 = cont.copy()
+        secondIter = filt.big_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
+        
+        # secondIter fanger fint de store konturer. 
+        # nu skal de tilsvarende omraader tages ud og laeses
+        contCount = 0
+        contours = filt.get_contour_list(con1)
+        x = y = w = h = None
+        list_of_texts = []
+        for contour in contours:
+            contCount = contCount+1
+            x, y, w, h = cv2.boundingRect(contour)
+            crop_img = frame2[y:y+h, x:x+w]
+
+            chr = "book2/contour_"+str(count)+"_"+str(contCount)+".jpg"   #"pic/pic2W.jpg"
+            chrfilename = chr.format(os.getpid())
+            cv2.imwrite(chrfilename, crop_img)
+
+            #gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
+            ##############################
+            ### write the code to clean an image
+            #blaaaa = get_still_filter.text_image_black_white(crop_img, [[0,0,255],[255,255,255]])
+            #clean_blaaaa =  get_still_filter.cleaning_subs(crop_img)
+            blaaa = get_still_filter.basic_color_mask(crop_img, [[0,0,255],[255,255,255]])
+            blaaa2 =  cv2.threshold(blaaa, 0, 255, cv2.THRESH_OTSU)[1]
+            text = pytesseract.image_to_string(blaaa, lang="dan")
+            ##################################
+            #text = pytesseract.image_to_string(gray)
+            list_of_texts.append(text)
+        print(count)
+        print(list_of_texts)
+        
+
+        '''
         try:
-            basic = filt.basic_color_mask(frame, [[0,0,255],[255,255,255]])
-            cont = filt.white_contours(basic)
-            #secondIter = filt.big_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
-            
-            
+            cont = get_still_filter.text_image_black_white(frame2, [[0,0,255],[255,255,255]])
+            clean_cont =  get_still_filter.cleaning_subs(cont)
+            text = pytesseract.image_to_string(cont, lang="dan")
+            print(count)
+            print(text)
+        except:
+            pass
+        '''
+        #hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
+        #lower_color_range = np.array([0,0,255], dtype=np.uint8)
+        #upper_color_range = np.array([255,255,255], dtype=np.uint8)
+        #mask = cv2.inRange(hsv, lower_color_range, upper_color_range)
+        #_, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
+        
+
+
             #cv2.imshow("secondIter", secondIter)
             
             # her er den gamle billedbehandling
@@ -46,43 +105,43 @@ while(cap.isOpened()):
             #clean_cont =  get_still_filter.cleaning_subs(cont)
             #text = pytesseract.image_to_string(cont, lang="dan")
 
-            '''
-            line = text+"\n"
-            if line == oldline:
-                pass
-            else:
-                oldline = line
-                file.write("frame: "+str(count)+"\n")
-                file.write(line)
-                print("frame: "+str(count))
-                print(text)
-            '''
-        except:
-            pass    
+        '''
+        line = text+"\n"
+        if line == oldline:
+            pass
+        else:
+            oldline = line
+            file.write("frame: "+str(count)+"\n")
+            file.write(line)
+            print("frame: "+str(count))
+            print(text)
+        '''
+        #except:
+        #    pass    
         
         pic_path = "book/frame_"+str(count)+".jpg"   #"pic/pic2W.jpg"
         filename = pic_path.format(os.getpid())
         cv2.imwrite(filename, frame)
-
+        '''
         pic_path = "book/frame_"+str(count)+"_basic.jpg"   #"pic/pic2W.jpg"
         filename = pic_path.format(os.getpid())
         cv2.imwrite(filename, basic)
-        
+        '''
         pic_path = "book/frame_"+str(count)+"_cont.jpg"   #"pic/pic2W.jpg"
         filename = pic_path.format(os.getpid())
         cv2.imwrite(filename, cont)
         
-        #pic_path = "book/frame_"+str(count)+"_secondIter.jpg"   #"pic/pic2W.jpg"
-        #filename = pic_path.format(os.getpid())
-        #cv2.imwrite(filename, secondIter)
+        pic_path = "book/frame_"+str(count)+"_secondIter.jpg"   #"pic/pic2W.jpg"
+        filename = pic_path.format(os.getpid())
+        cv2.imwrite(filename, secondIter)
         
+        #pic_path = "book/frame_"+str(count)+"_mask.jpg"   #"pic/pic2W.jpg"
+        #filename = pic_path.format(os.getpid())
+        #cv2.imwrite(filename, mask)
 
-        #stop script after X frames:
-        if (count > 850):
+        if (count > 900):
             break
-    
-    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    #cv2.imshow('frame',gray)
+
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
