@@ -8,15 +8,29 @@ from library import get_still_filter
 from library import simpel_video_filter as filt
 import shutil
 
+#2018-12-09 -- opgave til imorgen - rens noise straksf efter hvide farver er fundet
+#python saveImToBook.py
+
 def rens2(image):
     img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    img = cv2.resize(img, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
-    kernel = np.ones((1, 1), np.uint8)
+    #img = cv2.resize(img, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    kernel = np.ones((2, 2), np.uint8)
     img = cv2.dilate(img, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
-    img = cv2.GaussianBlur(img, (5, 5), 0)
-    text = pytesseract.image_to_string(img, lang="dan")
-    return text
+    img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    
+    #img = cv2.GaussianBlur(img, (3, 3), 0)
+    #img = cv2.medianBlur(img, 3)
+    #img = cv2.bilateralFilter(img,9,75,75)
+    #cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+
+    #resize2 + DilEro2,2 + threshBinary+Otsu == 
+    #resize 3 + kernel2,2DilEro == 2050+2250 + 800fejler
+    #GaussianBlur(img, (5, 5), 0) klare 150 men ikke 350
+    #resize 3 klare 150 men fejler 350 og 1000
+    #resize 2 alene laeser alt undtagen 150 og 350
+    return img
 
 
 folder = 'book'
@@ -51,7 +65,7 @@ oldline = ""
 while(cap.isOpened()):
     ret, frame = cap.read()
 
-    if ((count%50 == 0) and (count > 1000)):
+    if ((count%50 == 0) and (count > 900)):
         cv2.imshow('frame',frame)
 
         frame1 = frame.copy()
@@ -60,14 +74,13 @@ while(cap.isOpened()):
         basic = filt.basic_color_mask(frame1, [[0,0,255],[255,255,255]])
         cont = filt.white_contours(basic)
         con1 = cont.copy()
-        secondIter = filt.big_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
+        #secondIter = filt.big_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
         
-        # secondIter fanger fint de store konturer. 
-        # nu skal de tilsvarende omraader tages ud og laeses
         contCount = 0
         contours = filt.get_contour_list(con1)
         x = y = w = h = None
         list_of_texts = []
+        
         for contour in contours:
             contCount = contCount+1
             x, y, w, h = cv2.boundingRect(contour)
@@ -76,8 +89,9 @@ while(cap.isOpened()):
             #chr = "book2/contour_"+str(count)+"_"+str(contCount)+".jpg"   #"pic/pic2W.jpg"
             #chrfilename = chr.format(os.getpid())
             #cv2.imwrite(chrfilename, crop_img)
-
-            text = rens2(crop_img)
+            
+            img = rens2(crop_img)
+            text = pytesseract.image_to_string(img, lang="dan")
             list_of_texts.append(text)
         list_of_texts = list(filter(None, list_of_texts))
 
@@ -108,10 +122,7 @@ while(cap.isOpened()):
         filename = pic_path.format(os.getpid())
         cv2.imwrite(filename, cont)
         
-        pic_path = "book/frame_"+str(count)+"_secondIter.jpg"   #"pic/pic2W.jpg"
-        filename = pic_path.format(os.getpid())
-        cv2.imwrite(filename, secondIter)
-        
+
         #pic_path = "book/frame_"+str(count)+"_mask.jpg"   #"pic/pic2W.jpg"
         #filename = pic_path.format(os.getpid())
         #cv2.imwrite(filename, mask)

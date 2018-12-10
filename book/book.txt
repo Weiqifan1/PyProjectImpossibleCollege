@@ -1,6 +1,9 @@
+frame: 1000
+Hvor vil du hen?
+[når ro sale i EET lkg
 frame: 1050
 Hvor vil du hen?
 Hvad med Italien?
 frame: 1100
 Åh, gud!
-(LEGEN
+ikke i bilen!
