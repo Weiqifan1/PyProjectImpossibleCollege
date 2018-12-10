@@ -19,11 +19,11 @@ while(1):
 
     ret, frame = cap.read()
 
-    #cropped = frame[283:600, 100:600]
+    cropped = frame[283:600, 100:600]
 
     # fgmask = fgbg.apply(frame)
     
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
     gray = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)[1]
     
     # cv2.imshow('original', fgmask)
