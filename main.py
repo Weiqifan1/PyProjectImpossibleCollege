@@ -6,12 +6,7 @@ import cv2
 import os
 from library import get_still_filter
 
-''''
-2018-08-12
-Info:
-skriv i teminalen "python main.py" for at koere programmet.
-Skriv "q" for at stoppe programmet
-'''
-
+#2018-12-10 - i saveImToBook - linje 93+94: 
+#   crop ikke conturer der er for langt fro normale succefulde conturer.
 
 print("hello")

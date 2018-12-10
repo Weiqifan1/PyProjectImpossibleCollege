@@ -62,10 +62,16 @@ file = open("book/book.txt", "a+", encoding="utf-8")#"w")
 ### note end
 count = 0 #count frames
 oldline = ""
+saved_strings=[]
+saved_midY = []
+pure_midY = []
+pure_string = []
+midY_average = 0
+
 while(cap.isOpened()):
     ret, frame = cap.read()
 
-    if ((count%50 == 0) and (count > 900)):
+    if ((count%50 == 0) and (count > 50)):
         cv2.imshow('frame',frame)
 
         frame1 = frame.copy()
@@ -80,35 +86,75 @@ while(cap.isOpened()):
         contours = filt.get_contour_list(con1)
         x = y = w = h = None
         list_of_texts = []
-        
+        list_of_ylevels = [] #y+(0.5*h) == midpoints of the y aksis
         for contour in contours:
             contCount = contCount+1
             x, y, w, h = cv2.boundingRect(contour)
+            #if midY_average > 0:
+            #    if (abs(midY_average-(y+0.5*h))) < 60:
+
             crop_img = frame2[y:y+h, x:x+w]
 
-            #chr = "book2/contour_"+str(count)+"_"+str(contCount)+".jpg"   #"pic/pic2W.jpg"
-            #chrfilename = chr.format(os.getpid())
-            #cv2.imwrite(chrfilename, crop_img)
-            
             img = rens2(crop_img)
             text = pytesseract.image_to_string(img, lang="dan")
             list_of_texts.append(text)
-        list_of_texts = list(filter(None, list_of_texts))
-
+            list_of_ylevels.append(int(y+0.5*w))
+        #list_of_texts = list(filter(None, list_of_texts))
+        
         #print(count)
         #print(list_of_texts)
 
+        print("**************************************************************")
         if len(list_of_texts)>0:
-            line = list_of_texts[0]+"\n"
+            longest_str_idx = max(list_of_texts, key=len)
+            idx_of_longest = list_of_texts.index(longest_str_idx)
+            longest_str = list_of_texts[idx_of_longest]
+            saved_strings.append(longest_str)
+            saved_midY.append(list_of_ylevels[idx_of_longest])
+
+            line = longest_str+"\n"
             if line == oldline:
                 pass
             else:
                 oldline = line
                 file.write("frame: "+str(count)+"\n")
                 file.write(line)
-                print(str(count))
-                print(list_of_texts[0])
-                
+                print(str(count) + "   " + str(saved_midY[-1]))
+                #print(list_of_texts[0])
+                #print(list_of_ylevels)
+
+
+            longest_str_idx = max(list_of_texts, key=len)
+            if len(longest_str_idx) > 0:
+                idx_of_longest = list_of_texts.index(longest_str_idx)
+                pure_midY.append(list_of_ylevels[idx_of_longest])
+            if len(pure_midY) > 0:
+                midY_average = sum(pure_midY) / float(len(pure_midY))
+                print("hero: " + str(pure_midY) + "    " + str(midY_average))
+        print(list_of_texts)
+        print(list_of_ylevels)
+
+        #lav foelgende beregning:
+        # tag gennemsnittet af de 3 sidste midY der har en string stoerre end 0 
+        # hvis result ligger inden for +-60 pixels
+        #last_three_subs
+        
+
+
+        '''
+        for strItem in list_of_texts:
+            if len(strItem) > 0:
+                pure_string.append(strItem)
+        if len(pure_string) > 3:
+            for numItem in pure_string:
+                idx = list_of_texts.index(numItem)
+                pure_midY.append(saved_midY[idx])
+        print("pS:       " + str(pure_string))
+        print("pN:       " + str(pure_midY))
+        '''
+        
+
+
         '''
         pic_path = "book/frame_"+str(count)+".jpg"   #"pic/pic2W.jpg"
         filename = pic_path.format(os.getpid())
@@ -127,7 +173,7 @@ while(cap.isOpened()):
         #filename = pic_path.format(os.getpid())
         #cv2.imwrite(filename, mask)
         '''
-        if (count > 1100):
+        if (count > 400):
             break
 
 
