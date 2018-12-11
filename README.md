@@ -35,3 +35,29 @@ https://stackoverflow.com/questions/46866121/how-to-crop-bottom-part-of-an-image
 https://www.kerrickstaley.com/2017/05/29/extracting-chinese-subs-part-1  
 https://softwarerecs.stackexchange.com/questions/7521/program-that-can-extract-subtitles-from-hard-subbed-videos  
 
+DEPENDENSIES:
+Dependencies der ligger i anaconda:
+Numpy, Pillow, opencv.
+Herudover: 
+tesseract og pytesseract skal være installeret.
+
+### GUIDE TIL INSTALLATION AF TESSERACT OG PYTESSERACT:
+Gå til https://github.com/UB-Mannheim/tesseract/wiki
+Download og kør: tesseract-ocr-w64-setup-v4.0.0.20181030.exe (hvis man bruger windows 64bit)
+Under installation bliver man bedt om at værlge om man vil installere scripts og sprogfiler til andre sprog end engelsk.
+Installer gerne sprogfiler (og scriptfiler hvis de er på listen) til sprogene:
+Dansk, Fransk, Tysk, Koreansk (horizontal), simplificeret kinesisk (horizontal), traditionel Kinesisk (horizontal).
+(hvis det lykkes for os at få programmet til at virke til engelsk, prøver vi på andre sprog).  
+Vælge sprog og script.  
+
+### Miljøvariabel
+Find stien til tesseract-OCR
+Åben viduet til miljøvariabler. windowskey + pause key.
+Under system væl PATH og tryk rediger.  
+Vælg ny og paste stien til tesseract-OCR ind.  
+Luk og command line og start den igen.  
+
+### Dependencies
+pip install pytesseract   
+
+
