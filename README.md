@@ -29,6 +29,23 @@ Se om de enkelte frames ændrer sig, og genkend kun tekst når framen har ændre
 Refrakturering.  
 Oversæt underteksten live.  
 
+Hvis kun hvert 50 frame.  
+https://github.com/Weiqifan1/PyProjectImpossibleCollege/tree/chr181210  
+
+Google translate og tekst til tale.  
+https://github.com/Weiqifan1/PyProjectImpossibleCollege/tree/googleTranslate  
+
+Har sat de 2 features sammen.  
+https://github.com/Weiqifan1/PyProjectImpossibleCollege/tree/liveSpeech  
+
+### 3. iteration  
+If speech is behind speed it up.  
+Refakturer.  
+Dokumentation.  
+Gem tekstfilen rigtigt.  
+
+
+
 Videoer.  
 Hvid tekst på sort baggrund.  
 https://www.youtube.com/watch?v=86d7jx2YB0Y  
