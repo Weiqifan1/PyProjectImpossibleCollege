@@ -7,7 +7,7 @@
 from google.cloud import texttospeech
 
 
-def run_translate():
+def run_translate(numOfSubLines):
     # Instantiates a client
     client = texttospeech.TextToSpeechClient()
 
@@ -35,10 +35,10 @@ def run_translate():
     response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
     # The response's audio_content is binary.
-    with open('output.mp3', 'wb') as out:
+    with open('audio/output'+str(numOfSubLines)+'.mp3', 'wb') as out:
         # Write the response to the output file.
         out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')
+        print('Audio content written to file "output'+str(numOfSubLines)+'.mp3"')
         # [END tts_quickstart]
 
 
