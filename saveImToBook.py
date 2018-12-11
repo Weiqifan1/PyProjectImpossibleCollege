@@ -173,7 +173,7 @@ while(cap.isOpened()):
         #filename = pic_path.format(os.getpid())
         #cv2.imwrite(filename, mask)
         '''
-        if (count > 400):
+        if (count > 700):
             break
 
 
