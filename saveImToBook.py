@@ -9,6 +9,7 @@ from library import simpel_video_filter as filt
 import shutil
 from library import translate
 from library import text_to_speech
+from library import speech_out
 
 # 2018-12-09 -- opgave til imorgen - rens noise straksf efter hvide farver er fundet
 # python saveImToBook.py
@@ -54,6 +55,16 @@ for the_file in os.listdir(folder):
         # elif os.path.isdir(file_path): shutil.rmtree(file_path)
     except Exception as e:
         print(e)
+folder = 'audio'
+for the_file in os.listdir(folder):
+    file_path = os.path.join(folder, the_file)
+    try:
+        if os.path.isfile(file_path):
+            os.unlink(file_path)
+        # elif os.path.isdir(file_path): shutil.rmtree(file_path)
+    except Exception as e:
+        print(e)
+
 
 f = open("book/book3.txt", "w+", encoding="utf-8")
 f.write("")
@@ -150,9 +161,9 @@ while(cap.isOpened()):
             print(linesFromF)
             readf.close()
             translate.run_translate(linesFromF[-1])
-            
-            text_to_speech.run_translate()
 
+            text_to_speech.run_translate(len(linesFromF))
+            speech_out.speak(len(linesFromF))
             # print(list_of_ylevels)
 
             # lav foelgende beregning:

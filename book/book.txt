@@ -6,17 +6,3 @@ frame: 200
 
 frame: 250
 Prøv lige at se den her.
-frame: 350
-Lykke.
-frame: 400
-Velkommen, Marie Nielsen.
-Det her er min søn, Roman —
-frame: 500
-— og hans hustru, Stella.
-frame: 550
-- og hans hustru, Stella.
-frame: 600
-Vi vil betale dig 300.000 kroner —
-frame: 650
-— hvis du vil lade dig befrugte
-af min søn og føde os en arving.
