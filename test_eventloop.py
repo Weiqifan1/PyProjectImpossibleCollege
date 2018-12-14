@@ -72,24 +72,34 @@ asyncio.run(main()) """
 async def stupid_sum(queue):
     time_int = 0
     global global_time
-    while time_int < 1000:
+    while time_int < 10:
         await asyncio.sleep(1)
         time_int += 1
         global_time = time_int
         stupid = print(time_int)
-        queue.put(stupid)
+        await queue.put(stupid)
+
+        if time_int == 2:
+            await queue.put(firstWorker(queue)) 
+        elif time_int == 4:
+            await queue.put(secondWorker(queue))
+            
+        
 
 async def firstWorker(queue):
-    while True:
-        await asyncio.sleep(3)
+    time_int = 0
+    while time_int < 1:
+        await asyncio.sleep(1)
         time = print("First Worker Executed " + str(global_time))
-        queue.put(time)
+        await queue.put(time)
+        break
 
 async def secondWorker(queue):
     while True:
         await asyncio.sleep(1)
         sec = print("Second Worker Executed")
-        queue.put(sec)
+        await queue.put(sec)
+        break
 
 async def consumer(queue):
     while True:
@@ -98,25 +108,29 @@ async def consumer(queue):
         print(f'consumed {from_queue}')
 
 async def main():
+    num_producers = 1
+    num_consumers = 1
+    print('Make queue')
     queue = asyncio.Queue()
 
     # fire up the both producers and consumers
-    producers = [asyncio.create_task(stupid_sum(queue), firstWorker(queue), secondWorker(queue))
-                 ]
+    producers = [asyncio.create_task(stupid_sum(queue))
+                 for i in range(num_producers)]
     consumers = [asyncio.create_task(consumer(queue))
-                 ]
+                 for i in range(num_consumers)]
 
     # with both producers and consumers running, wait for
     # the producers to finish
-    await asyncio.gather(*producers)
-    print('---- done producing')
+    await asyncio.wait(consumers)
+    #await asyncio.gather(*producers)
+    #print('---- done producing')
 
     # wait for the remaining tasks to be processed
-    await queue.join()
+    #await queue.join()
 
     # cancel the consumers, which are now idle
-    for c in consumers:
-        c.cancel()
+    #for c in consumers:
+    #    c.cancel()
 
 asyncio.run(main())
 

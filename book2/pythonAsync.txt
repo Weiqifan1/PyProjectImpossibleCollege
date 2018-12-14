@@ -1,0 +1,20 @@
+Tråde systemet betemmer hvornår der skiftes mellem tråde. Det er godt fordi detkræver ikke at man skriver så meget kode.
+Systemet gør det for dig. Problemet er du ved ikke, hvornår der skiftes mellem tråde så derfor må du bruge låse.
+Det sværer er at identificer alle de steder, hvor der skal være locks.
+
+Forskellen på tråde og async er at async skifter når der er et passende tidspunkt at skifte på. Det betyder at der ikke er noget der afbrydes.
+Du bruger await som en task switch. Der hvor der skiftes mellem de opgaver, der udføres.
+Du bestemmer, hvor når tasken skal skifte så behøver du ikke locks(for det meste). Prisen for en task switch er meget lav.
+Async bygger på generators. Der har state. Derfor er prisen så lav. 
+Dog alt skal være non-blocking. Du kan ikke bare bruge read mere. Det skal være en async read i en task.
+
+
+    Async maximizes CPU utilization because it has less overhead than threads.
+    Threading typically works with existing code and tools as long as locks are added around critical sections.
+    For complex systems, async is much easier to get right than threads with locks.
+    Threads require very little tooling (locks and queues).
+    Async needs a great deal of tooling (futures, event loops, and non-blocking versions of just about everything).
+
+
+
+https://morestina.net/blog/category/tech
