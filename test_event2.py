@@ -22,6 +22,7 @@ async def consumer(receive_channel):
     async with receive_channel:
         async for value in receive_channel:
             result = math.factorial(value)
+            await trio.sleep(1)
             print("number: " + str(value) + " got value {!r}".format(result))
 
 trio.run(main)
