@@ -13,40 +13,16 @@ from library import speech_out
 import trio
 
 
-async def rens2_001(image):
-    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-async def rens2_002(img):
-    return cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
-async def rens2_003(img, kernel):
-    return cv2.dilate(img, kernel, iterations=1)
-async def rens2_004(img, kernel):
-    return cv2.erode(img, kernel, iterations=1)
-async def rens2_005(img):
-    return cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-
 async def rens2(image):
-    img = await rens2_001(image)                                                    #cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    img = await rens2_002(img)                              #cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # img = cv2.resize(img, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
     kernel = np.ones((2, 2), np.uint8)
-    img = await rens2_003(img, kernel)                      #cv2.dilate(img, kernel, iterations=1)
-    img = await rens2_004(img, kernel)                       #cv2.erode(img, kernel, iterations=1)
-    img = await rens2_005(img)                                #cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    img = cv2.dilate(img, kernel, iterations=1)
+    img = cv2.erode(img, kernel, iterations=1)
+    img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+
     return img
-
-
-async def consumer_001(frame1):
-    basic = filt.basic_color_mask(frame1, [[0, 0, 255], [255, 255, 255]])
-    return filt.white_contours(basic)        #con1 = filt.white_contours(basic)
-async def consumer_002(con1):
-    return filt.get_contour_list(con1)#contours = filt.get_contour_list(con1)
-async def consumer_003(contour):
-    x, y, w, h = cv2.boundingRect(contour)
-    return x, y, w, h
-async def consumer_004(frame2, x, y, w, h):
-    return frame2[y:y+h, x:x+w]   #crop_img = frame2[y:y+h, x:x+w]
-async def consumer_005(img):
-    return pytesseract.image_to_string(img, lang="dan")#text = pytesseract.image_to_string(img, lang="dan")
-
 
 async def consumer(receive_channel): #def speak_from_frame(frame):
     async with receive_channel:
@@ -60,17 +36,19 @@ async def consumer(receive_channel): #def speak_from_frame(frame):
         pure_midY = []
         pure_string = []
         midY_average = 0
-        
+
         async for value in receive_channel: # value == [frame, count]
             frame = value[0]
             count = value[1]
 
-            
             frame1 = frame.copy()
             frame2 = frame.copy()
-                                        #basic = filt.basic_color_mask(frame1, [[0, 0, 255], [255, 255, 255]])
-            con1 = await consumer_001(frame1)   #filt.white_contours(basic)
-            contours = await consumer_002(con1)#filt.get_contour_list(con1)
+            basic = filt.basic_color_mask(frame1, [[0, 0, 255], [255, 255, 255]])
+            cont = filt.white_contours(basic)
+            con1 = cont.copy()
+                # secondIter = filt.big_contours(cont)#filt.non_contours_to_dark(cont, [[0,0,255],[255,255,255]])
+
+            contours = filt.get_contour_list(con1)
 
             contCount = 0
             x = y = w = h = None
@@ -78,16 +56,14 @@ async def consumer(receive_channel): #def speak_from_frame(frame):
             list_of_ylevels = []  # y+(0.5*h) == midpoints of the y aksis
             for contour in contours:
                 contCount = contCount+1
-                x, y, w, h = await consumer_003(contour) #cv2.boundingRect(contour)
+                x, y, w, h = cv2.boundingRect(contour)
+                # if midY_average > 0:
+                #    if (abs(midY_average-(y+0.5*h))) < 60:
 
-                crop_img = await consumer_004(frame2, x, y, w, h)  #crop_img = frame2[y:y+h, x:x+w]
+                crop_img = frame2[y:y+h, x:x+w]
 
                 img = await rens2(crop_img)
-                
-                print("before: " + str(count))
-                text = await consumer_005(img)   #text = pytesseract.image_to_string(img, lang="dan")
-                print("after: " + str(count))
-                
+                text = pytesseract.image_to_string(img, lang="dan")
                 list_of_texts.append(text)
                 list_of_ylevels.append(int(y+0.5*w))
             #return list_of_texts, list_of_ylevels
@@ -118,8 +94,6 @@ async def consumer(receive_channel): #def speak_from_frame(frame):
                 if len(pure_midY) > 0:
                     midY_average = sum(pure_midY) / float(len(pure_midY))
                     print("hero: " + str(pure_midY) + "    " + str(midY_average))
-            
-            
 
             if len(list_of_texts) > 0 and len(list_of_texts[0]) > 0:
                 f = open("book/book3.txt", "a+", encoding="utf-8")
@@ -190,18 +164,15 @@ async def producer(send_channel):
         while(cap.isOpened()):
             ret, frame = cap.read()
             cv2.imshow('frame', frame)
-            await trio.sleep(0.02)
             if ((count % 50 == 0) and (count > 50)):
                 #cv2.imshow('frame', frame)
-                
-                #print("before: " + str(count))
+
                 ###############################################################################
                 #######################   async funktion skal ind her:   #########################
                 #list_of_texts, list_of_ylevels = speak_from_frame(frame)
                 await send_channel.send([frame, count])
                 ###############################################################################
                 ###############################################################################
-                #print("after: " + str(count))
 
                     # print(list_of_ylevels)
 
