@@ -20,7 +20,7 @@ python -m pip install -U pygame
 ### Installation of tesseract and pytesseract  
 1. Go to this homepage https://github.com/UB-Mannheim/tesseract/wiki and download tesseract.  
 2. For windows users run the .exe file and install the program.  
-3. Choose danish and english for the language AND scriptfile. If you want to try additional languages you also need to choose them here.  
+3. Choose additional script data(download) and additional language data(download).  
 
 #### Environment variables for tesseract
 1. Find the path to tesseract-OCR on your operating system and copy it.  
@@ -91,5 +91,7 @@ using a Google Cloud Client Library. The client library can determine your crede
 4. python main.py [<url_to_dataset>]  
 
 ### DELETE THIS!
-https://github.com/docopt/docopt
-https://snarky.ca/how-the-heck-does-async-await-work-in-python-3-5/
+https://github.com/docopt/docopt  
+https://snarky.ca/how-the-heck-does-async-await-work-in-python-3-5/  
+https://steemit.com/utopian-io/@mucyoung/create-a-python-cli-program-with-docopt  
+https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df  
