@@ -14,9 +14,6 @@ Christian Lykke and Bo Henriksen.
 The project uses the latest version of Pythons Anaconda installation.  
 
 It also uses these dependencies:  
-conda install -c conda-forge trio  
-pip install pytesseract  
-pip install image  
 pip install opencv-python  
 python -m pip install -U pygame
 
