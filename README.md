@@ -1,67 +1,98 @@
-# PyProjectImpossibleCollege
-Dette er eksamensprojektet for team Impossible College - Bo Henriksen, Anders Nissen og Christian Lykke
+# Live Translation of Movie Subtitles
+### Documentation
+This is the exam project for 4. semester at CPH Business made by Impossible College.  
 
-2018-11-27
+The program will be able to get the subtitles from a movie, translate it and read alound the translated language. 
+The basic program reads a danish subtitle from a black background by finding the area with most white pixels. 
+The words that are found is written to a text file. The text file is translated to english and save in a text file and the translation will be read aloud.  
+All this will happen live so the translation that is read aloud will follow the subtitles from the movie.  
 
-Projektet går ud på at læse eksisterende undertekster i videoer.
-Første skridt: vi vælger et simpelt undertekst format med dansk eller engelsk tekst, og ser om vi kan skrve et program der kan læse underteksten ud fra videoens pixels.
-Til dette skridt har vi foruddefineret hvilket alfabet/sprog programmet skal lede efter, og vi fortæller programmet hvilket format det skal lede efter. Det vil sige at vi f.eks. fortæller programmet at den kan finde underteksten omkrandset af sorte rektangler i bunden af skærmen.
-
-Hvis dette virker, vil vi prøve at udvidde programmet med at lede efter undertekster på samme sprog (stadig dansk eller engelsk) men forskellige undertekst formater.
-
-Hvis dette virker, prøver vi at få programmet til at virke med undertekster på forskellige sprog.
-
-Vi forestiller os at bruge eksisterende projekter på github, som har en licens der tillader andre prorammører at klone og redigere deres kode. Disse projekter vil vi så bygge videre på med vores egen kode.
-
-Vi sørger for at de kodeafsnit vi ikke selv har skrevet nemt kan identificeres.
-
-
-
-
-
-Videoer.  
-Hvid tekst på sort baggrund.  
-https://www.youtube.com/watch?v=86d7jx2YB0Y  
-
-Hvid tekst på sort baggrund. 2 sprog samtidig.  
-https://www.youtube.com/watch?v=ExNTMDsmAMk&vl=da  
-
-Hvis tekst på videoens baggrund.  
-https://www.youtube.com/watch?v=8YEM_hn5o78  
-https://www.youtube.com/watch?v=nfMSjCeY9UA  
-
-Hvis tekst på grå gennemsigtig baggrund.  
-https://www.youtube.com/watch?v=Zw9OKRp2fZQ  
-
-https://docs.opencv.org/3.4/db/d5c/tutorial_py_bg_subtraction.html  
-https://stackoverflow.com/questions/46866121/how-to-crop-bottom-part-of-an-imagepart-with-subtitle-in-python  
-
-https://www.kerrickstaley.com/2017/05/29/extracting-chinese-subs-part-1  
-https://softwarerecs.stackexchange.com/questions/7521/program-that-can-extract-subtitles-from-hard-subbed-videos  
-
-DEPENDENSIES:
-Dependencies der ligger i anaconda:
-Numpy, Pillow, opencv.
-Herudover: 
-tesseract og pytesseract skal være installeret.
-
-### GUIDE TIL INSTALLATION AF TESSERACT OG PYTESSERACT:
-Gå til https://github.com/UB-Mannheim/tesseract/wiki
-Download og kør: tesseract-ocr-w64-setup-v4.0.0.20181030.exe (hvis man bruger windows 64bit)
-Under installation bliver man bedt om at værlge om man vil installere scripts og sprogfiler til andre sprog end engelsk.
-Installer gerne sprogfiler (og scriptfiler hvis de er på listen) til sprogene:
-Dansk, Fransk, Tysk, Koreansk (horizontal), simplificeret kinesisk (horizontal), traditionel Kinesisk (horizontal).
-(hvis det lykkes for os at få programmet til at virke til engelsk, prøver vi på andre sprog).  
-Vælge sprog og script.  
-
-### Miljøvariabel
-Find stien til tesseract-OCR
-Åben viduet til miljøvariabler. windowskey + pause key.
-Under system væl PATH og tryk rediger.  
-Vælg ny og paste stien til tesseract-OCR ind.  
-Luk og command line og start den igen.  
+### Group
+Christian Lykke and Bo Henriksen.  
 
 ### Dependencies
-pip install pytesseract   
+The project uses the latest version of Pythons Anaconda installation.  
 
+It also uses these dependencies:  
+conda install -c conda-forge trio  
+pip install pytesseract  
+pip install image  
+pip install opencv-python  
+python -m pip install -U pygame
 
+### Installation of tesseract and pytesseract  
+1. Go to this homepage https://github.com/UB-Mannheim/tesseract/wiki and download tesseract.  
+2. For windows users run the .exe file and install the program.  
+3. Choose danish and english for the language AND scriptfile. If you want to try additional languages you also need to choose them here.  
+
+#### Environment variables for tesseract
+1. Find the path to tesseract-OCR on your operating system and copy it.  
+2. Open the window for enviroment variables. On windows press window key + pause key.  
+3. In system choose PATH and press edit.  
+4. Choose new and paste the path to tesseract-OCR and close the window.  
+5. Close your terminal and open it again.  
+
+6. In your terminal write: pip install pytesseract.
+
+### Get a Google API key
+1. Open this page https://cloud.google.com/docs/authentication/getting-started#auth-cloud-implicit-python  
+2. GO TO THE "CREATE SERVICE ACCOUNT KEY PAGE" (Click the above link and click on the link on top of the page.)  
+3. From the Service account drop-down list, select New service account.  
+4. In the Service account name field, enter a name for the project.  
+5. From the Role drop-down list, select Project > Owner.  
+6. Click Create. A JSON file that contains your key downloads to your computer.  
+
+### Enable translation and text-to-speech API
+1. Click on dashboards in the upper left corner when you have downloaded your json file.  
+2. Click Enable APIs.  
+3. Click on view all for machine learning.  
+4. Enable cloud translation API.  
+5. Go to this page https://cloud.google.com/text-to-speech/docs/quickstart-protocol  
+6. Below "Before you begin" - click 3 "Enable the Cloud Text-to-Speech API" and choose your project(the project you created above).  
+
+#### Link to your json file for each terminal session
+##### Windows
+##### With PowerShell
+$env: GOOGLE_APPLICATION_CREDENTIALS="[PATH]"  
+
+##### With command prompt:
+set GOOGLE_APPLICATION_CREDENTIALS=[PATH]  
+
+##### For example
+set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\[username]\Downloads\googleApi\[name_of_your_jsonfile.json]  
+
+##### Linux/Mac
+export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"  
+
+##### For example:  
+export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"  
+
+On some operating systems this does not work. It's possible to set up an enviroment variable. The advantages is you dont have to link to your json file each time you open a new terminal.  
+
+After setting the environment variable, you don't need to explicitly specify your credentials in code when  
+using a Google Cloud Client Library. The client library can determine your credentials implicitly.  
+
+#### Environment variables for your Google authentication json file.  
+1. Find the path to your google authentication json file on your operating system and copy it.  
+2. Open the window for enviroment variables. On windows press window key + pause key.  
+3. In user choose new enviromental variable. 
+4. In name write: GOOGLE_APPLICATION_CREDENTIALS  
+5. In value write: [PATH TO JSON FILE WITH CREDENTIALS]  
+6. Click ok and exit. 
+7. Close your terminal and open it again. 
+
+8. pip install --upgrade google-cloud-translate  
+9. pip install --upgrade google-cloud-texttospeech  
+
+### How to run the project
+1. Clone the project  
+
+2. Cd into the directory of the project  
+
+3. Example of how to run the project  
+
+4. python main.py [<url_to_dataset>]  
+
+### DELETE THIS!
+https://github.com/docopt/docopt
+https://snarky.ca/how-the-heck-does-async-await-work-in-python-3-5/
