@@ -6,8 +6,7 @@ import cv2
 import os
 # from library import get_still_filter # BRUGES IKKE! HUSK AT SLETTE FIL!!!!
 import library.processing.simpel_video_filter as simpel_video_filter
-#from library import simpel_video_filter as filt
-import shutil
+import shutil # BRUGES IKKE!!
 import library.translation_and_speech.translate as translate
 import library.translation_and_speech.text_to_speech as text_to_speech
 import library.translation_and_speech.audio as audio
@@ -40,10 +39,10 @@ def rens2(image):
 def capture_video():
     cap = cv2.VideoCapture('library/movies/videoplayback.webm')
 
-    file = open("book/book.txt", "w+")
+    file = open("library/subtitles/frames_and_subtitles.txt", "w+")
     file.write("")
     file.close()
-    file = open("book/book.txt", "a+", encoding="utf-8")  # "w")
+    file = open("library/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8")  # "w")
     # note end
     count = 0  # count frames
     oldline = ""
@@ -117,11 +116,11 @@ def capture_video():
                     print("hero: " + str(pure_midY) + "    " + str(midY_average))
 
             if len(list_of_texts) > 0 and len(list_of_texts[0]) > 0:
-                f = open("book/book3.txt", "a+", encoding="utf-8")
+                f = open("library/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
                 f.write(list_of_texts[0] + "\n")
                 f.close()
                 print(list_of_texts[0])
-                readf = open('book/book3.txt', mode='r', encoding='utf-8')
+                readf = open('library/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
                 linesFromF = readf.readlines()
                 print(linesFromF)
                 readf.close()

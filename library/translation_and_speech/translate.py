@@ -1,13 +1,12 @@
-def run_translate(book3):
-    # [START translate_quickstart]
-    # Imports the Google Cloud client library
-    from google.cloud import translate
+# Imports the Google Cloud client library
+from google.cloud import translate
 
+def run_translate(subtitle_from_movie):
     # Instantiates a client
     translate_client = translate.Client()
 
     # The text to translate
-    text = book3  # 'Hello, world!'
+    text = subtitle_from_movie  # 'Hello, world!'
     # The target language
     target = 'eng'
 
@@ -17,7 +16,7 @@ def run_translate(book3):
         target_language=target)
 
     # Write translated text to file.
-    f = open("book/translated_subtitles.txt", "a+", encoding="utf-8")
+    f = open("library/subtitles/translated_subtitles.txt", "a+", encoding="utf-8")
     subtitle_format = format(text)
     translated_subtitle = format(translation['translatedText'])
     f.write(translated_subtitle+"\n")
