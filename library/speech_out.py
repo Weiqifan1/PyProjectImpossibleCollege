@@ -1,5 +1,5 @@
 
-import pyaudio
+#import pyaudio
 import wave
 import sys
 import os
