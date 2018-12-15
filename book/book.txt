@@ -6,6 +6,7 @@ frame: 200
 
 frame: 250
 Prøv lige at se den her.
+<<<<<<< HEAD
 frame: 350
 Lykke.
 frame: 400
@@ -20,3 +21,5 @@ Vi vil betale dig 300.000 kroner —
 frame: 650
 — hvis du vil lade dig befrugte
 af min søn og føde os en arving.
+=======
+>>>>>>> 359b273e3aecab7aaec76e8df008e6c1e7638d31

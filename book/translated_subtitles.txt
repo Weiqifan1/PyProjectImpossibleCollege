@@ -1,5 +1,6 @@
 Everyone has a dream.
 Just try to see it here.
+<<<<<<< HEAD
 Happiness.
 This is my son, Roman -
 This is my son, Roman -
@@ -8,3 +9,5 @@ This is my son, Roman -
 We will pay you $ 300,000 -
 of my son and give us a heir.
 of my son and give us a heir.
+=======
+>>>>>>> 359b273e3aecab7aaec76e8df008e6c1e7638d31
