@@ -16,7 +16,7 @@ def run_translate(subtitle_from_movie, translation_language):
         target_language=target)
 
     # Write translated text to file.
-    f = open("library/subtitles/translated_subtitles.txt", "a+", encoding="utf-8")
+    f = open("data/output/subtitles/translated_subtitles.txt", "a+", encoding="utf-8")
     subtitle_format = format(text)
     translated_subtitle = format(translation['translatedText'])
     f.write(translated_subtitle+"\n")

@@ -37,12 +37,12 @@ def rens2(image):
     return img
 
 def capture_video(translation_language):
-    cap = cv2.VideoCapture('library/movies/videoplayback.webm')
+    cap = cv2.VideoCapture('data/movies/videoplayback.webm')
 
-    file = open("library/subtitles/frames_and_subtitles.txt", "w+")
+    file = open("data/output/subtitles/frames_and_subtitles.txt", "w+")
     file.write("")
     file.close()
-    file = open("library/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8")  # "w")
+    file = open("data/output/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8")  # "w")
     # note end
     count = 0  # count frames
     oldline = ""
@@ -116,11 +116,11 @@ def capture_video(translation_language):
                     print("hero: " + str(pure_midY) + "    " + str(midY_average))
 
             if len(list_of_texts) > 0 and len(list_of_texts[0]) > 0:
-                f = open("library/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
+                f = open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
                 f.write(list_of_texts[0] + "\n")
                 f.close()
                 print(list_of_texts[0])
-                readf = open('library/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
+                readf = open('data/output/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
                 linesFromF = readf.readlines()
                 print(linesFromF)
                 readf.close()

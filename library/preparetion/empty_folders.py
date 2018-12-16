@@ -2,7 +2,7 @@ import os
 
 def empty_folders_before_run():
 
-    folder_subtitles = 'library/subtitles'
+    folder_subtitles = 'data/output/subtitles'
 
     # Create a folder if it does not exist.
     create_folder(folder_subtitles)
@@ -16,7 +16,7 @@ def empty_folders_before_run():
         except Exception as e:
             print(e)
     
-    folder_audio = 'library/audio'
+    folder_audio = 'data/output/audio'
     create_folder(folder_audio)
 
     for the_file in os.listdir(folder_audio):
