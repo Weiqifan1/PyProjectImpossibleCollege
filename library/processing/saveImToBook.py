@@ -36,7 +36,7 @@ def rens2(image):
     # resize 2 alene laeser alt undtagen 150 og 350
     return img
 
-def capture_video():
+def capture_video(translation_language):
     cap = cv2.VideoCapture('library/movies/videoplayback.webm')
 
     file = open("library/subtitles/frames_and_subtitles.txt", "w+")
@@ -124,9 +124,9 @@ def capture_video():
                 linesFromF = readf.readlines()
                 print(linesFromF)
                 readf.close()
-                translate.run_translate(linesFromF[-1])
-
-                text_to_speech.run_translate(len(linesFromF))
+                translate.run_translate(linesFromF[-1], translation_language)
+# , 
+                text_to_speech.run_translate(len(linesFromF), translation_language)
                 audio.speak(len(linesFromF))
                 # print(list_of_ylevels)
 

@@ -7,7 +7,7 @@
 from google.cloud import texttospeech
 
 
-def run_translate(numOfSubLines):
+def run_translate(numOfSubLines, translation_language):
     # Instantiates a client
     client = texttospeech.TextToSpeechClient()
 
@@ -23,7 +23,7 @@ def run_translate(numOfSubLines):
     # Build the voice request, select the language code ("en-US") and the ssml
     # voice gender ("neutral")
     voice = texttospeech.types.VoiceSelectionParams(
-        language_code='en-US',  # en-US de-DE sv-SE
+        language_code=translation_language, # 'en-US',  # en-US de-DE sv-SE
         ssml_gender=texttospeech.enums.SsmlVoiceGender.NEUTRAL)
 
     # Select the type of audio file you want returned
