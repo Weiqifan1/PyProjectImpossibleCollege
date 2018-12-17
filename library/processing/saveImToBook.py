@@ -19,10 +19,10 @@ def clean_image(image):
     img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     return img
 
-def save_latest_text(list_of_texts):
-    f = open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
-    f.write(list_of_texts[0] + "\n")
-    f.close()
+#def save_latest_text(list_of_texts):
+#    f = open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
+#   f.write(list_of_texts[0] + "\n")
+#    f.close()
     
 def get_all_subtitles():
     readf = open('data/output/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
@@ -50,11 +50,14 @@ def get_text_from_frame(contours, original_frame):
         possible_subs.append(text)
     return possible_subs
 
-def save_possible_subs(line, count_frames):
+def save_possible_subs(longest_str, count_frames):
     file = open("data/output/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8") 
     file.write("frame: "+str(count_frames)+"\n")
-    file.write(line)
+    file.write(longest_str+"\n")
     file.close()
+    f = open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
+    f.write(longest_str+"\n")#list_of_texts[0] + "\n")
+    f.close()
 
 
 def get_longest_string(list_of_texts):
@@ -80,6 +83,24 @@ def different_alpha(subtitle_1, subtitle_2):
     new_sub_2 = re.sub('[^A-Za-z]+', '', subtitle_1).lstrip()
     return new_sub_1 == new_sub_2
 
+'''
+def different_alpha(subtitle_1, subtitle_2):
+    new_sub_1 = re.sub('[^A-Za-z]+', '', subtitle_1).lstrip()
+    new_sub_2 = re.sub('[^A-Za-z]+', '', subtitle_1).lstrip()
+    return new_sub_1 == new_sub_2
+'''
+
+def new_subtitle(longest_str, all_subtitles):
+    result = True
+    if len(longest_str) < 1:
+        result = False
+    if len(all_subtitles) < 1 or all_subtitles[-1] == "":
+        result = False
+    else:
+        result = different_alpha(longest_str, all_subtitles[-1]+"\n")
+    return result
+
+'''
 def new_subtitle(line, all_subtitles):
     result = True
       
@@ -88,12 +109,27 @@ def new_subtitle(line, all_subtitles):
     else:
         result = different_alpha(line, all_subtitles[-1]+"\n")
     return result
-
-
-def handle_texts(line, possible_subs, translation_language):
+'''
+############ kig  her !!!!!!!!!!!!!! 2018-12-17-13.29
+def handle_texts(longest_str, possible_subs, translation_language):
     all_subtitles = get_all_subtitles()
     
-    if new_subtitle(line, all_subtitles) and len(possible_subs) > 0 and len(possible_subs[0]) > 0:
+    if len(possible_subs) > 0 and len(possible_subs[0]) > 0 and new_subtitle(longest_str, all_subtitles):
+        #save_latest_text(possible_subs)  #list_of_texts ##############################################################
+        all_subtitles = get_all_subtitles()
+        print(possible_subs[0])
+        speak(all_subtitles, translation_language)
+    #else:
+    #    try:
+    #        save_latest_text(possible_subs)  #list_of_texts ##############################################################
+    #    except:
+    #        pass
+
+'''
+ef handle_texts(line, possible_subs, translation_language):
+    all_subtitles = get_all_subtitles()
+    
+    if len(possible_subs) > 0 and len(possible_subs[0]) > 0 and new_subtitle(line, all_subtitles):
         save_latest_text(possible_subs)  #list_of_texts ##############################################################
         all_subtitles = get_all_subtitles()
         print(possible_subs[0])
@@ -103,8 +139,16 @@ def handle_texts(line, possible_subs, translation_language):
             save_latest_text(possible_subs)  #list_of_texts ##############################################################
         except:
             pass
+'''
 
+def speak_from_frame(frame, count_frames, translation_language):
+    possible_subs = search_for_white_texts(frame)
+    longest_str = get_longest_string(possible_subs)
+    save_possible_subs(longest_str, count_frames)
+    handle_texts(longest_str, possible_subs, translation_language)
+    return possible_subs  #list_of_texts
 
+'''
 def speak_from_frame(frame, count_frames, translation_language):
     possible_subs = search_for_white_texts(frame)
     longest_str = get_longest_string(possible_subs)
@@ -112,6 +156,7 @@ def speak_from_frame(frame, count_frames, translation_language):
     save_possible_subs(line, count_frames)
     handle_texts(line, possible_subs, translation_language)
     return possible_subs  #list_of_texts
+'''
 
 def capture_video(translation_language):
     print("press q to quit the program")
