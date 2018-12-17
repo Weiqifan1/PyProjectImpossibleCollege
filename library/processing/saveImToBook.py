@@ -1,6 +1,7 @@
 import numpy as np
 from PIL import Image
 import pytesseract
+import re
 import cv2
 import os
 import library.processing.simpel_video_filter as simpel_video_filter
@@ -17,13 +18,6 @@ def clean_image(image):
     img = cv2.erode(img, kernel, iterations=1)
     img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     return img
-
-def handle_texts(list_of_texts, translation_language):
-    if len(list_of_texts) > 0 and len(list_of_texts[0]) > 0:
-        save_latest_text(list_of_texts)
-        print(list_of_texts[0])
-        all_subtitles = get_all_subtitles()
-        speak(all_subtitles, translation_language)
 
 def save_latest_text(list_of_texts):
     f = open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
@@ -46,17 +40,17 @@ def get_text_from_frame(contours, original_frame):
     img = None
     contCount = 0
     x = y = w = h = None
-    list_of_texts = []
+    possible_subs = []
     for contour in contours:
         contCount = contCount+1
         x, y, w, h = cv2.boundingRect(contour)
         crop_img = original_frame[y:y+h, x:x+w]
         img = clean_image(crop_img)
         text = pytesseract.image_to_string(img, lang="dan")
-        list_of_texts.append(text)
-    return list_of_texts
+        possible_subs.append(text)
+    return possible_subs
 
-def save_subs_with_frame_count(line, count_frames):
+def save_possible_subs(line, count_frames):
     file = open("data/output/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8") 
     file.write("frame: "+str(count_frames)+"\n")
     file.write(line)
@@ -73,21 +67,51 @@ def get_longest_string(list_of_texts):
     return longest_str
 
 def search_for_white_texts(frame):
-    frame1 = frame.copy()
+    test_frame = frame.copy()
     original_frame = frame.copy()
-    basic = simpel_video_filter.basic_color_mask(frame1, [[0, 0, 255], [255, 255, 255]])
+    basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]])
     cont = simpel_video_filter.white_contours(basic)
     contours = simpel_video_filter.get_contour_list(cont)
-    list_of_texts = get_text_from_frame(contours, original_frame)
-    return list_of_texts
+    possible_subs = get_text_from_frame(contours, original_frame)
+    return possible_subs
+
+def different_alpha(subtitle_1, subtitle_2):
+    new_sub_1 = re.sub('[^A-Za-z]+', '', subtitle_1).lstrip()
+    new_sub_2 = re.sub('[^A-Za-z]+', '', subtitle_1).lstrip()
+    return new_sub_1 == new_sub_2
+
+def new_subtitle(line, all_subtitles):
+    result = True
+      
+    if len(all_subtitles) < 1 or all_subtitles[-1] == "":
+        result = False
+    else:
+        result = different_alpha(line, all_subtitles[-1]+"\n")
+    return result
+
+
+def handle_texts(line, possible_subs, translation_language):
+    all_subtitles = get_all_subtitles()
+    
+    if new_subtitle(line, all_subtitles) and len(possible_subs) > 0 and len(possible_subs[0]) > 0:
+        save_latest_text(possible_subs)  #list_of_texts ##############################################################
+        all_subtitles = get_all_subtitles()
+        print(possible_subs[0])
+        speak(all_subtitles, translation_language)
+    else:
+        try:
+            save_latest_text(possible_subs)  #list_of_texts ##############################################################
+        except:
+            pass
+
 
 def speak_from_frame(frame, count_frames, translation_language):
-    list_of_texts = search_for_white_texts(frame)
-    longest_str = get_longest_string(list_of_texts)
+    possible_subs = search_for_white_texts(frame)
+    longest_str = get_longest_string(possible_subs)
     line = longest_str+"\n"
-    save_subs_with_frame_count(line, count_frames)
-    handle_texts(list_of_texts, translation_language)
-    return list_of_texts
+    save_possible_subs(line, count_frames)
+    handle_texts(line, possible_subs, translation_language)
+    return possible_subs  #list_of_texts
 
 def capture_video(translation_language):
     print("press q to quit the program")
@@ -97,7 +121,7 @@ def capture_video(translation_language):
     while(cap.isOpened()):
         _, frame = cap.read()
 
-        if (count_frames % 50 == 0):# and (count_frames > 50)):
+        if (count_frames % 50 == 0):
             cv2.imshow('frame', frame)
 
             list_of_texts = speak_from_frame(frame, count_frames, translation_language)

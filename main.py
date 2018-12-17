@@ -25,14 +25,10 @@ import library.processing.saveImToBook as save
 from docopt import docopt
 # pip install docopt==0.6.2
 
-#2018-12-10 - i saveImToBook - linje 93+94: 
-#   crop ikke conturer der er for langt fro normale succefulde conturer.
-
 def main(translation_language):
     empty_folders.empty_folders_before_run()
     create.create_files_for_subtitles()
     save.capture_video(translation_language)
-
 
 def check_language(language):
     language_list = {'english': 'en', 'italian': 'it', 'swedish': 'sv', 'dutch': 'nl', 'japanese': 'ja', 'french': 'fr', 'german': 'de'}
