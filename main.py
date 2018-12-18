@@ -21,14 +21,16 @@ import cv2
 import os
 import library.preparetion.empty_folders as empty_folders
 import library.preparetion.create_files as create
-import library.processing.saveImToBook as save
+import library.processing.play_video as play_video
 from docopt import docopt
 # pip install docopt==0.6.2
+
+max_frame = 300
 
 def main(translation_language):
     empty_folders.empty_folders_before_run()
     create.create_files_for_subtitles()
-    save.capture_video(translation_language)
+    play_video.capture_video(translation_language, max_frame)
 
 def check_language(language):
     language_list = {'english': 'en', 'italian': 'it', 'swedish': 'sv', 'dutch': 'nl', 'japanese': 'ja', 'french': 'fr', 'german': 'de'}

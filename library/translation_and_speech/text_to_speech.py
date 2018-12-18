@@ -40,7 +40,3 @@ def run_translate(numOfSubLines, translation_language):
         out.write(response.audio_content)
         print('Audio content written to file "output'+str(numOfSubLines)+'.mp3"')
         # [END tts_quickstart]
-
-
-""" if __name__ == '__main__':
-    run_quickstart() """
