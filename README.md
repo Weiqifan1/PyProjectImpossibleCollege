@@ -92,7 +92,7 @@ using a Google Cloud Client Library. The client library can determine your crede
 
 3. Example of how to run the project  
 
-4. python main.py <language>
+4. python main.py [<language>]
 
 5. python main.py or python main.py japanese
 
