@@ -1,14 +1,16 @@
 import pytesseract
+from pathlib import Path
 import re
 import cv2
 import library.processing.simpel_video_filter as simpel_video_filter
 import library.processing.create_contours as create_contours
 
+
 def get_all_subtitles():
-    readf = open('data/output/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
-    linesFromF = readf.readlines()
-    readf.close()
-    return linesFromF
+    with open(Path('data/output/subtitles/subtitle_from_movie.txt'), mode='r', encoding='utf-8') as file:
+        lines_from_subtitle_file_list = file.readlines()
+        return lines_from_subtitle_file_list
+
 
 def get_text_from_frame(contours, original_frame):
     """ 
@@ -19,26 +21,30 @@ def get_text_from_frame(contours, original_frame):
     contCount = 0
     x = y = w = h = None
     possible_subs = []
+    
     for contour in contours:
         contCount = contCount+1
         x, y, w, h = cv2.boundingRect(contour)
-        crop_img = original_frame[y:y+h, x:x+w]
+        crop_img = original_frame[y:y + h, x:x + w]
         img = simpel_video_filter.clean_image(crop_img)
         text = pytesseract.image_to_string(img, lang="dan")
         possible_subs.append(text)
+    
     return possible_subs
+
 
 def save_subtitles(longest_str, count_frames):
     """ 
     Saves subtitles.
      """
-    file = open("data/output/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8") 
-    file.write("frame: "+str(count_frames)+"\n")
-    file.write(longest_str+"\n")
-    file.close()
-    f = open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8")
-    f.write(longest_str+"\n")#list_of_texts[0] + "\n")
-    f.close()
+    with open(Path("data/output/subtitles/frames_and_subtitles.txt"), "a+", encoding="utf-8") as file:
+        file.write("frame: " + str(count_frames) + "\n")
+        file.write(longest_str + "\n")
+
+
+    with open(Path("data/output/subtitles/subtitle_from_movie.txt"), "a+", encoding="utf-8") as file:
+        file.write(longest_str + "\n") 
+    
 
 def get_longest_string(list_of_texts):
     try:
@@ -47,7 +53,9 @@ def get_longest_string(list_of_texts):
         longest_str = list_of_texts[idx_of_longest]
     except:
         longest_str = ""
+
     return longest_str
+
 
 def search_for_white_texts(frame):
     """ 
@@ -55,11 +63,14 @@ def search_for_white_texts(frame):
      """
     test_frame = frame.copy()
     original_frame = frame.copy()
+
     basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]])
     cont = create_contours.white_contours(basic)
     contours = create_contours.create_large_contoures(cont) # if there is a text create a contour arounf it.
     possible_subs = get_text_from_frame(contours, original_frame) # Takes the contour and read the text from what is inside the contours.
+    
     return possible_subs
+
 
 def get_last_subtitle():
     """ 
@@ -70,6 +81,7 @@ def get_last_subtitle():
         return all_subtitles[-1]
     else:
         return ""
+
 
 def compare_strings(subtitle_1, subtitle_2):
     """ 

@@ -11,13 +11,13 @@ Options:
     -h --help           Show this screen.
     -v --version        Show version.
 
+    Press q to quit the program.
 """
 
 import library.preparetion.empty_folders as empty_folders
 import library.preparetion.create_files as create
 import library.processing.play_video as play_video
 from docopt import docopt
-# pip install docopt==0.6.2
 
 # For testing. The movie finish at frame...
 max_frame = 10000

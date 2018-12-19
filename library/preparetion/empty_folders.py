@@ -1,11 +1,13 @@
 import os
+from pathlib import Path
+
 
 def empty_folders_before_run():
     """ 
     Empty folders and create folders for the subtitles and audio files if it does not exist.
     """
 
-    folder_subtitles = 'data/output/subtitles'
+    folder_subtitles = Path('data/output/subtitles')
 
     # Create a folder if it does not exist.
     create_folder(folder_subtitles)
@@ -18,7 +20,7 @@ def empty_folders_before_run():
         except Exception as e:
             print(e)
     
-    folder_audio = 'data/output/audio'
+    folder_audio = Path('data/output/audio')
     create_folder(folder_audio)
 
     for the_file in os.listdir(folder_audio):
