@@ -21,12 +21,13 @@ def white_contours(black_white_frame):
         y = y - 4
         w = w + 8
         h = h + 8
-        cv2.rectangle(basic2, (x, y), (x+w, y+h), (255, 255, 255), 1) # fill the rectangles with white
-        mid_left = (x, round(y+(h/2)))
-        mid_right = (x+w, round(y+(h/2)))
+        cv2.rectangle(basic2, (x, y), (x + w, y + h), (255, 255, 255), 1) # fill the rectangles with white
+        mid_left = (x, round(y + (h/2)))
+        mid_right = (x + w, round(y + (h/2)))
         cv2.line(basic2, mid_left, mid_right, (255, 255, 255), h)
 
     return basic2
+
 
 def create_large_contoures(white_contours):
     """ 

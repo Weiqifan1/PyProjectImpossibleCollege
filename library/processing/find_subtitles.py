@@ -4,11 +4,13 @@ import cv2
 import library.processing.simpel_video_filter as simpel_video_filter
 import library.processing.create_contours as create_contours
 
+
 def get_all_subtitles():
     readf = open('data/output/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
     linesFromF = readf.readlines()
     readf.close()
     return linesFromF
+
 
 def get_text_from_frame(contours, original_frame):
     """ 
@@ -23,12 +25,13 @@ def get_text_from_frame(contours, original_frame):
     for contour in contours:
         contCount = contCount+1
         x, y, w, h = cv2.boundingRect(contour)
-        crop_img = original_frame[y:y+h, x:x+w]
+        crop_img = original_frame[y:y + h, x:x + w]
         img = simpel_video_filter.clean_image(crop_img)
         text = pytesseract.image_to_string(img, lang="dan")
         possible_subs.append(text)
     
     return possible_subs
+
 
 def save_subtitles(longest_str, count_frames):
     """ 
@@ -50,7 +53,9 @@ def get_longest_string(list_of_texts):
         longest_str = list_of_texts[idx_of_longest]
     except:
         longest_str = ""
+
     return longest_str
+
 
 def search_for_white_texts(frame):
     """ 
@@ -66,6 +71,7 @@ def search_for_white_texts(frame):
     
     return possible_subs
 
+
 def get_last_subtitle():
     """ 
     Returns the last subtitle line.
@@ -75,6 +81,7 @@ def get_last_subtitle():
         return all_subtitles[-1]
     else:
         return ""
+
 
 def compare_strings(subtitle_1, subtitle_2):
     """ 

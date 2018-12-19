@@ -1,5 +1,6 @@
 import os
 
+
 def empty_folders_before_run():
     """ 
     Empty folders and create folders for the subtitles and audio files if it does not exist.

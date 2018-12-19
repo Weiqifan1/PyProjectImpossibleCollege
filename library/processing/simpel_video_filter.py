@@ -1,4 +1,3 @@
-
 import numpy as np
 from PIL import Image
 import pytesseract
@@ -13,6 +12,7 @@ def basic_color_mask(image, color_range_hsv):
     lower_white = np.array(color_range_hsv[0], dtype=np.uint8)
     upper_white = np.array(color_range_hsv[1], dtype=np.uint8)
     mask = cv2.inRange(hsv, lower_white, upper_white)
+
     return mask
 
 
@@ -26,4 +26,5 @@ def clean_image(image):
     img = cv2.dilate(img, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
     img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    
     return img
