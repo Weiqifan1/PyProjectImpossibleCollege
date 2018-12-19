@@ -46,6 +46,7 @@ def capture_video(translation_language, max_frame):
 
     while(cap.isOpened()):
         _, frame = cap.read()
+        cv2.imshow('frame', frame) #show every frame on screen
 
         if (count_frames % 50 == 0):
             cv2.imshow('frame', frame) # Show the fram on the screen.
