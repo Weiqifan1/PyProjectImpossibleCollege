@@ -15,11 +15,11 @@ The project uses the latest version of Pythons Anaconda installation.
 
 It also uses these dependencies:  
 pip install opencv-python  
-python -m pip install -U pygame
-pip install docopt==0.6.2
-pip install pytesseract
+python -m pip install -U pygame  
+pip install docopt==0.6.2  
+pip install pytesseract  
 pip install --upgrade google-cloud-translate  
-pip install --upgrade google-cloud-texttospeech
+pip install --upgrade google-cloud-texttospeech  
 
 ### Installation of tesseract and pytesseract  
 1. Go to this homepage https://github.com/UB-Mannheim/tesseract/wiki and download tesseract.  
