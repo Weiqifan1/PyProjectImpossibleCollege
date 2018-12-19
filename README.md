@@ -87,13 +87,8 @@ using a Google Cloud Client Library. The client library can determine your crede
 
 ### How to run the project
 1. Clone the project  
-
 2. Cd into the directory of the project  
-
 3. Example of how to run the project  
-
-4. python main.py <language>
-
-5. python main.py or python main.py japanese
-
-6. If you need help or want to see which countries you can translate to write python main.py -h or python main.py --help
+4. python main.py <language>  
+5. python main.py or python main.py japanese  
+6. If you need help or want to see which countries you can translate to write python main.py -h or python main.py --help  
