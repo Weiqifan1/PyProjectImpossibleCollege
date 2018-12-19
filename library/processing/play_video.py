@@ -1,3 +1,7 @@
+
+
+#!/usr/bin/python3
+
 import numpy as np
 from PIL import Image
 import pytesseract
@@ -9,7 +13,9 @@ import library.translation_and_speech.text_to_speech as text_to_speech
 import library.processing.create_contours as create_contoures
 import library.translation_and_speech.audio as audio
 import library.processing.find_subtitles as find_subtitles
-
+import queue
+import threading
+import time
 
 
 def speak(all_subtitles_list, translation_language):
@@ -36,7 +42,46 @@ def speak_from_frame(frame, count_frames, translation_language):
         all_subtitles = find_subtitles.get_all_subtitles()
         speak(all_subtitles, translation_language)
 
+
+class myThread_pictures(threading.Thread):
+   def __init__(self, threadID, name, q):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.q = q
+   def run(self):
+      print ("Starting " + self.name)
+      process_data_pictures(self.name, self.q)
+      print ("Exiting " + self.name)
+
+def process_data_pictures(threadName, q):
+    #exitFlag = 0
+    #while not exitFlag:
+    queueLock.acquire()
+    if not workQueue.empty():
+        data = q.get()
+            #max_frame = data[3]
+            #if max_frame <= 
+        queueLock.release()
+                    #speak_from_frame(frame, count_frames, translation_language) 
+        speak_from_frame(data[0], data[1], data[2])  #print ("%s processing %s" % (threadName, data))
+    else:
+        queueLock.release()
+            #time.sleep(1)
+
 def capture_video(translation_language, max_frame):
+    
+    # exitFlag = 0 jeg prøver at undgå at bruge den
+
+    #queueLock = threading.Lock() #jeg proever at laegge dem over i main.
+    #workQueue = queue.Queue(10)
+
+    #threads = []
+
+    thread_one = myThread_pictures(1, "Tråd_et", workQueue)
+    thread_one.start()
+    #threads.append(thread_one)
+    
     """ 
     Capture the video and show every 50. frame.
      """
@@ -49,14 +94,21 @@ def capture_video(translation_language, max_frame):
         cv2.imshow('frame', frame) #show every frame on screen
 
         if (count_frames % 50 == 0):
-            cv2.imshow('frame', frame) # Show the fram on the screen.
+            #cv2.imshow('frame', frame) # Show the fram on the screen.
 
-            speak_from_frame(frame, count_frames, translation_language) 
+            queue_item = [frame, count_frames, translation_language]
+            queueLock.acquire()
+            workQueue.put(queue_item)
+            queueLock.release()
+            #speak_from_frame(frame, count_frames, translation_language) 
 
             if (count_frames > max_frame):
                 break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         count_frames += 1  # count frames.
+    #exitFlag = 1 #tråd ariabel
+    thread_one.join()       #vent på at tråd er faerdig
+
     cap.release()
     cv2.destroyAllWindows()
