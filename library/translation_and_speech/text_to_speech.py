@@ -1,4 +1,5 @@
 from google.cloud import texttospeech
+from pathlib import Path
 
 
 def run_translate(numOfSubLines, translation_language):
@@ -9,11 +10,9 @@ def run_translate(numOfSubLines, translation_language):
     client = texttospeech.TextToSpeechClient()
 
     # Set the text input to be synthesized.
-    readf = open('data/output/subtitles/translated_subtitles.txt', mode='r', encoding='utf-8')
-    translated_subtitles = readf.readlines()
-
-    readf.close()
-
+    with open(Path('data/output/subtitles/translated_subtitles.txt'), mode='r', encoding='utf-8') as file:
+        translated_subtitles = file.readlines()
+    
     synthesis_input = texttospeech.types.SynthesisInput(
         text=translated_subtitles[-1])
 
@@ -32,7 +31,7 @@ def run_translate(numOfSubLines, translation_language):
     response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
     # The response's audio_content is binary.
-    with open('data/output/audio/output' + str(numOfSubLines) + '.mp3', 'wb') as out:
+    with open(Path('data/output/audio/output' + str(numOfSubLines) + '.mp3'), 'wb') as out:
         # Write the response to the output file.
         out.write(response.audio_content)
         

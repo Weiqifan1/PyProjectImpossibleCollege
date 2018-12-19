@@ -11,6 +11,7 @@ Options:
     -h --help           Show this screen.
     -v --version        Show version.
 
+    Press q to quit the program.
 """
 
 import library.preparetion.empty_folders as empty_folders

@@ -1,7 +1,6 @@
-import wave
-import sys
-import os
 import pygame
+from pathlib import Path
+
 
 def speak(numOfSubLines):
     """ 

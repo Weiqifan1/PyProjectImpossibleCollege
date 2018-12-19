@@ -1,14 +1,9 @@
-import numpy as np
-from PIL import Image
-import pytesseract
 import cv2
-import os
-import library.processing.simpel_video_filter as simpel_video_filter
 import library.translation_and_speech.translate as translate
 import library.translation_and_speech.text_to_speech as text_to_speech
-import library.processing.create_contours as create_contoures
 import library.translation_and_speech.audio as audio
 import library.processing.find_subtitles as find_subtitles
+from pathlib import Path
 
 
 def speak(all_subtitles_list, translation_language):

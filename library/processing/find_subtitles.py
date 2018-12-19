@@ -1,4 +1,5 @@
 import pytesseract
+from pathlib import Path
 import re
 import cv2
 import library.processing.simpel_video_filter as simpel_video_filter
@@ -6,10 +7,9 @@ import library.processing.create_contours as create_contours
 
 
 def get_all_subtitles():
-    readf = open('data/output/subtitles/subtitle_from_movie.txt', mode='r', encoding='utf-8')
-    linesFromF = readf.readlines()
-    readf.close()
-    return linesFromF
+    with open(Path('data/output/subtitles/subtitle_from_movie.txt'), mode='r', encoding='utf-8') as file:
+        lines_from_subtitle_file_list = file.readlines()
+        return lines_from_subtitle_file_list
 
 
 def get_text_from_frame(contours, original_frame):
@@ -37,12 +37,12 @@ def save_subtitles(longest_str, count_frames):
     """ 
     Saves subtitles.
      """
-    with open("data/output/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8") as file:
+    with open(Path("data/output/subtitles/frames_and_subtitles.txt"), "a+", encoding="utf-8") as file:
         file.write("frame: " + str(count_frames) + "\n")
         file.write(longest_str + "\n")
 
 
-    with open("data/output/subtitles/subtitle_from_movie.txt", "a+", encoding="utf-8") as file:
+    with open(Path("data/output/subtitles/subtitle_from_movie.txt"), "a+", encoding="utf-8") as file:
         file.write(longest_str + "\n") 
     
 

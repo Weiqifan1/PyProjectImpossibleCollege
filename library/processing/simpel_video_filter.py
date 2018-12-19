@@ -1,8 +1,6 @@
 import numpy as np
-from PIL import Image
-import pytesseract
 import cv2
-import os
+
 
 def basic_color_mask(image, color_range_hsv):
     """ 
