@@ -43,7 +43,7 @@ pip install --upgrade google-cloud-texttospeech
 5. From the Role drop-down list, select Project > Owner.  
 6. Click Create. A JSON file that contains your key downloads to your computer.  
 
-### Enable translation and text-to-speech API
+#### Enable translation and text-to-speech API (On Google Cloud Homepage)  
 1. Click on dashboards in the upper left corner when you have downloaded your json file.  
 2. Click Enable APIs.  
 3. Click on view all for machine learning.  
