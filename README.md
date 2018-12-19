@@ -51,21 +51,21 @@ pip install --upgrade google-cloud-texttospeech
 5. Go to this page https://cloud.google.com/text-to-speech/docs/quickstart-protocol  
 6. Below "Before you begin" - click 3 "Enable the Cloud Text-to-Speech API" and choose your project(the project you created above).  
 
-#### Link to your json file for each terminal session
-##### Windows
-##### With PowerShell
+#### Link to your json file for each terminal session  
+##### Windows  
+##### With PowerShell  
 $env: GOOGLE_APPLICATION_CREDENTIALS="[PATH]"  
 
-##### With command prompt:
+##### With command prompt:  
 set GOOGLE_APPLICATION_CREDENTIALS=[PATH]  
 
-##### For example
+##### For example  
 set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\[username]\Downloads\googleApi\[name_of_your_jsonfile.json]  
 
-##### Linux/Mac
+##### Linux/Mac  
 export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"  
 
-##### For example:  
+##### For example:   
 export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"  
 
 On some operating systems this does not work. It's possible to set up an enviroment variable. The advantages is you dont have to link to your json file each time you open a new terminal.  
