@@ -12,8 +12,8 @@ def get_all_subtitles():
 
 def get_text_from_frame(contours, original_frame):
     """ 
-    Tager konturer og original frame fjerner støj og kalder tesseract.
-    Returner en liste a strings, der kan være subtitles(eller fejllæsninger).
+    Takes contour and the origina frame and remove noise and then calls tesseract.
+    Return a list with strings, that can be subtitles or error readings.
      """
     img = None
     contCount = 0
@@ -30,7 +30,7 @@ def get_text_from_frame(contours, original_frame):
 
 def save_subtitles(longest_str, count_frames):
     """ 
-    Gemmer undertekster.
+    Saves subtitles.
      """
     file = open("data/output/subtitles/frames_and_subtitles.txt", "a+", encoding="utf-8") 
     file.write("frame: "+str(count_frames)+"\n")
@@ -51,14 +51,14 @@ def get_longest_string(list_of_texts):
 
 def search_for_white_texts(frame):
     """ 
-    Leder efter hvis tekst og læser teksten.
+    Searching for a text and reads the text.
      """
     test_frame = frame.copy()
     original_frame = frame.copy()
     basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]])
     cont = create_contours.white_contours(basic)
-    contours = create_contours.create_large_contoures(cont) # Sætter konturer om hvis tekst.
-    possible_subs = get_text_from_frame(contours, original_frame) # Tager konturer og læser tekst fra de steder.
+    contours = create_contours.create_large_contoures(cont) # if there is a text create a contour arounf it.
+    possible_subs = get_text_from_frame(contours, original_frame) # Takes the contour and read the text from what is inside the contours.
     return possible_subs
 
 def get_last_subtitle():
@@ -74,9 +74,10 @@ def get_last_subtitle():
 def compare_strings(subtitle_1, subtitle_2):
     """ 
     Return true if there is diffrence between strings. 
-    Alt der ikke er stort eller lille bogstav gøres til whitespace. Samme string hvis der er 2 bindestreger.
+    If it's not a letter then change it to whitespace. 
+    If there are 2 -- then it's the same string.
      """
-    new_sub_1 = re.sub('[^A-Za-z]+', ' ', subtitle_1).lstrip() # lstrip fjerner whitespace.
+    new_sub_1 = re.sub('[^A-Za-z]+', ' ', subtitle_1).lstrip() # lstrip removes whitespace.
     new_sub_2 = re.sub('[^A-Za-z]+', ' ', subtitle_2).lstrip()
     
     return new_sub_1 != new_sub_2

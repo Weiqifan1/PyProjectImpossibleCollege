@@ -13,19 +13,14 @@ Options:
 
 """
 
-import numpy as np
-from PIL import Image
-import pytesseract
-import argparse
-import cv2
-import os
 import library.preparetion.empty_folders as empty_folders
 import library.preparetion.create_files as create
 import library.processing.play_video as play_video
 from docopt import docopt
 # pip install docopt==0.6.2
 
-max_frame = 300
+# For testing. The movie finish at frame...
+max_frame = 10000
 
 def main(translation_language):
     empty_folders.empty_folders_before_run()

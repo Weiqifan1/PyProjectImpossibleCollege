@@ -2,15 +2,19 @@
 from google.cloud import translate
 
 def run_translate(subtitle_from_movie, translation_language):
-    # Instantiates a client
+    """ 
+    Translate a text file from one language to another.
+     """
+    # Instantiates a client.
     translate_client = translate.Client()
 
-    # The text to translate
-    text = subtitle_from_movie  # 'Hello, world!'
-    # The target language
-    target = translation_language #'eng'
+    # The text to translate.
+    text = subtitle_from_movie  
 
-    # Translates some text into Russian
+    # The target language.
+    target = translation_language 
+
+    # Translates some text into target language.
     translation = translate_client.translate(
         text,
         target_language=target)
@@ -24,4 +28,3 @@ def run_translate(subtitle_from_movie, translation_language):
 
     print('Text: {}'.format(text))
     print('Translation: {}'.format(translation['translatedText']))
-    # [END translate_quickstart]

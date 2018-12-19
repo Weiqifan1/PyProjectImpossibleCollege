@@ -3,8 +3,8 @@ import cv2
 
 def white_contours(black_white_frame):
     """ 
-    Sætter konturer på et billede med sort/hvid kontrast.
-    Tager de små konturer, forstørrer de hvide områder.
+    puts contours around a picture with black/white contrast.
+    Takes the small contours and enlarge the white areas.
      """
     mask = black_white_frame.copy()
     basic2 = black_white_frame.copy()
@@ -26,7 +26,7 @@ def white_contours(black_white_frame):
 
 def create_large_contoures(white_contours):
     """ 
-     Sætter en stor kontur omkring hele linjen(De store hvide områder).
+     Create a large contour around all the white area so we can se that it's a line.
      """
     mask = white_contours.copy()
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)

@@ -14,7 +14,7 @@ import library.processing.find_subtitles as find_subtitles
 
 def speak(all_subtitles_list, translation_language):
     """ 
-    Oversætter subtitles og kalder audio.speak så teksten kan læses op.
+    Translate subtitles and calls audio.speak that read the text.
      """
     translate.run_translate(all_subtitles_list[-1], translation_language)
     text_to_speech.run_translate(len(all_subtitles_list), translation_language)
@@ -23,13 +23,13 @@ def speak(all_subtitles_list, translation_language):
 
 def speak_from_frame(frame, count_frames, translation_language):
     """ 
-    Tager en frame og undersøger om der er tekst og hvis der er så oversætter den og læser video højt.
+    Is checking if there are text in a frame and if there is then it translate and read it.
      """
     find_possible_subtitles_list = find_subtitles.search_for_white_texts(frame)
     longest_string = find_subtitles.get_longest_string(find_possible_subtitles_list)
     longest_string = longest_string.replace('\n', ' ') # Removes newline and make a space so we get all the subtitles.
     last_subtitle = find_subtitles.get_last_subtitle()
-    # Hvis linen ikke er blank og der er nye bogstaver så læser den de nye bogstaver højt.
+    # if the line is not empty and there are new letters then it read the new letters.
     if len(longest_string.strip()) > 0 and find_subtitles.compare_strings(longest_string, last_subtitle):  
         find_subtitles.save_subtitles(longest_string, count_frames)
 
@@ -38,7 +38,7 @@ def speak_from_frame(frame, count_frames, translation_language):
 
 def capture_video(translation_language, max_frame):
     """ 
-    Kører videoen, og viser hver 50. frame.
+    Capture the video and show every 50. frame.
      """
     print("press q to quit the program")
     cap = cv2.VideoCapture('data/movies/videoplayback.webm')
@@ -48,7 +48,7 @@ def capture_video(translation_language, max_frame):
         _, frame = cap.read()
 
         if (count_frames % 50 == 0):
-            cv2.imshow('frame', frame) # Viser framen på skærmen.
+            cv2.imshow('frame', frame) # Show the fram on the screen.
 
             speak_from_frame(frame, count_frames, translation_language) 
 
@@ -56,6 +56,6 @@ def capture_video(translation_language, max_frame):
                 break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        count_frames += 1  # Tæller frames.
+        count_frames += 1  # count frames.
     cap.release()
     cv2.destroyAllWindows()

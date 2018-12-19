@@ -7,7 +7,7 @@ import os
 
 def basic_color_mask(image, color_range_hsv):
     """ 
-    Skaber kontrast mellem hvid og ikke hvid i et billede.
+    Create contrast between white and what is not white in a picture.
      """
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     lower_white = np.array(color_range_hsv[0], dtype=np.uint8)
@@ -18,10 +18,10 @@ def basic_color_mask(image, color_range_hsv):
 
 def clean_image(image):
     """ 
-    Fjerner støj fra billedet fra et udsnit af det originale billede.
+    Remove noise from a small part of the picture. In the lower part of the picture where the subtitle is.
      """
     img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) # grey
-    img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC) # resize - flere pixels at arbejde med.
+    img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC) # resize - more pixels to work with.
     kernel = np.ones((2, 2), np.uint8)
     img = cv2.dilate(img, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
