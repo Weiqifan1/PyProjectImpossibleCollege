@@ -1,5 +1,3 @@
-
-
 def create_files_for_subtitles():
     """ 
     This function creates 3 empty files for our subtitles.
