@@ -123,7 +123,7 @@ def capture_video(translation_language, max_frame):
             break
         count_frames += 1  # count frames.
         
-        time.sleep(1/frames_pr_second)
+        time.sleep(2/frames_pr_second)
     #exitFlag = 1 #tråd ariabel
     thread_one.join()       #vent på at tråd er faerdig
 
