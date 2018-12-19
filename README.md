@@ -10,6 +10,9 @@ All this will happen live so the translation that is read aloud will follow the 
 ### Group
 Christian Lykke, Anders Nissen and Bo Henriksen.  
 
+### Iterations
+It's possible to see our iterations and the most important branches for each iteration here: https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/developer/ITERATIONS.md  
+
 ### Dependencies
 The project uses the latest version of Pythons Anaconda installation.  
 
