@@ -8,7 +8,7 @@ The words that are found is written to a text file. The text file is translated 
 All this will happen live so the translation that is read aloud will follow the subtitles from the movie.  
 
 ### Group
-Christian Lykke and Bo Henriksen.  
+Christian Lykke, Anders Nissen and Bo Henriksen.  
 
 ### Dependencies
 The project uses the latest version of Pythons Anaconda installation.  
@@ -16,6 +16,10 @@ The project uses the latest version of Pythons Anaconda installation.
 It also uses these dependencies:  
 pip install opencv-python  
 python -m pip install -U pygame
+pip install docopt==0.6.2
+pip install pytesseract
+pip install --upgrade google-cloud-translate  
+pip install --upgrade google-cloud-texttospeech
 
 ### Installation of tesseract and pytesseract  
 1. Go to this homepage https://github.com/UB-Mannheim/tesseract/wiki and download tesseract.  
@@ -88,10 +92,8 @@ using a Google Cloud Client Library. The client library can determine your crede
 
 3. Example of how to run the project  
 
-4. python main.py [<url_to_dataset>]  
+4. python main.py <language>
 
-### DELETE THIS!
-https://github.com/docopt/docopt  
-https://snarky.ca/how-the-heck-does-async-await-work-in-python-3-5/  
-https://steemit.com/utopian-io/@mucyoung/create-a-python-cli-program-with-docopt  
-https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df  
+5. python main.py or python main.py japanese
+
+6. If you need help or want to see which countries you can translate to write python main.py -h or python main.py --help
