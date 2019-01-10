@@ -5,6 +5,17 @@ def empty_folders_before_run():
     Empty folders and create folders for the subtitles and audio files if it does not exist.
     """
 
+    folder_frames = "data/output/frames"
+    # Create a folder if it does not exist.
+    create_folder(folder_frames)
+    for the_file in os.listdir(folder_frames):
+        file_path = os.path.join(folder_frames, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print(e)
+
     folder_subtitles = 'data/output/subtitles'
 
     # Create a folder if it does not exist.
