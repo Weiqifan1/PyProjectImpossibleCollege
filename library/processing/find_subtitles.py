@@ -29,13 +29,13 @@ def get_text_from_frame(contours, original_frame, count_frames):
 
         
         imBigCont = Image.fromarray(crop_img)
-        imBigCont.save("data/output/frames/" +str(count_frames)+"_00"+ str(contCount)+ "_5BigContCrop" +".png") # create_contours.white_contours linje 20
+        imBigCont.save("data/output/frames/04crop_image/" +str(count_frames)+ "_00" + str(contCount)+ "_crop_image" +".png") # create_contours.white_contours linje 20
 
 
-        img = simpel_video_filter.clean_image(crop_img)
+        img = simpel_video_filter.clean_image(crop_img, count_frames)
 
-        imClean = Image.fromarray(img)
-        imClean.save("data/output/frames/" +str(count_frames)+"_00"+ str(contCount)+ "_6clean" +".png") # create_contours.white_contours linje 20
+        img_clean = Image.fromarray(img)
+        img_clean.save("data/output/frames/09clean_img_after_threshold/" + str(count_frames)+ "_clean_image_after_threshold" +".png") # create_contours.white_contours linje 20
 
 
         text = pytesseract.image_to_string(img, lang="dan")
@@ -77,14 +77,19 @@ def search_for_white_texts(frame, count_frames):
 
     basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]], count_frames)
     imBasic = Image.fromarray(basic)
-    imBasic.save("data/output/frames/" +str(count_frames)+ "_2cv2InRange" +".png") # simpel_video_filter.basic_color_mask linje 13
+    imBasic.save("data/output/frames/01basic_color_mask/" + str(count_frames)+ "basic_color_mask" +".png") # simpel_video_filter.basic_color_mask linje 13
 
     cont = create_contours.white_contours(basic, count_frames)
 
     imCont = Image.fromarray(cont)
-    imCont.save("data/output/frames/" +str(count_frames)+ "_4cont" +".png") # create_contours.white_contours linje 20
+    imCont.save("data/output/frames/02white_contours/" + str(count_frames)+ "white_contours" +".png") # create_contours.white_contours linje 20
 
     contours = create_contours.create_large_contoures(cont) # if there is a text create a contour arounf it.
+    print(type(contours))
+    #img_large_contours = Image(contours)
+    #img_large_contours.save("data/output/frames/03white_large_contours" + str(count_frames)+ "white_contours" +".png")
+    #cv2.imwrite("data/output/frames/03white_large_contours/" + str(count_frames)+ "white_contours" +".png", img_large_contours)
+
     possible_subs = get_text_from_frame(contours, original_frame, count_frames) # Takes the contour and read the text from what is inside the contours.
     
     return possible_subs

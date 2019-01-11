@@ -20,7 +20,7 @@ import library.processing.play_video as play_video
 from docopt import docopt
 
 # For testing. The movie finish at frame...
-max_frame = 10000
+max_frame = 750
 
 def main(translation_language):
     empty_folders.empty_folders_before_run()

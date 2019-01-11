@@ -15,7 +15,7 @@ def white_contours(black_white_frame, count_frames):
     _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     
     imBasic = Image.fromarray(mask)
-    imBasic.save("data/output/frames/" +str(count_frames)+ "_3mask" +".png") 
+    imBasic.save("data/output/frames/02x_find_contours/" +str(count_frames)+ "_find_contours" +".png") 
 
     for contour in contours:
         rect = cv2.boundingRect(contour)
