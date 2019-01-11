@@ -4,7 +4,7 @@ import library.translation_and_speech.text_to_speech as text_to_speech
 import library.translation_and_speech.audio as audio
 import library.processing.find_subtitles as find_subtitles
 from pathlib import Path
-
+from PIL import Image
 
 def speak(all_subtitles_list, translation_language):
     """ 
@@ -19,7 +19,7 @@ def speak_from_frame(frame, count_frames, translation_language):
     """ 
     Is checking if there are text in a frame and if there is then it translate and read it.
      """
-    find_possible_subtitles_list = find_subtitles.search_for_white_texts(frame)
+    find_possible_subtitles_list = find_subtitles.search_for_white_texts(frame, count_frames)
     longest_string = find_subtitles.get_longest_string(find_possible_subtitles_list)
     longest_string = longest_string.replace('\n', ' ') # Removes newline and make a space so we get all the subtitles.
     last_subtitle = find_subtitles.get_last_subtitle()
@@ -46,6 +46,8 @@ def capture_video(translation_language, max_frame):
 
         if (count_frames % 50 == 0):
             cv2.imshow('frame', frame) # Show the fram on the screen.
+            im = Image.fromarray(frame)
+            im.save("data/output/frames/" +str(count_frames)+ "_1blue" +".png") # billedet gemmes i et andet 3-farve format så rød bliver blå
 
             speak_from_frame(frame, count_frames, translation_language) 
 

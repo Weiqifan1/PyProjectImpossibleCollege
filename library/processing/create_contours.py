@@ -1,7 +1,7 @@
 import cv2
+from PIL import Image
 
-
-def white_contours(black_white_frame):
+def white_contours(black_white_frame, count_frames):
     """ 
     puts contours around a picture with black/white contrast.
     Takes the small contours and enlarge the white areas.
@@ -14,6 +14,9 @@ def white_contours(black_white_frame):
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     
+    imBasic = Image.fromarray(mask)
+    imBasic.save("data/output/frames/" +str(count_frames)+ "_3mask" +".png") 
+
     for contour in contours:
         rect = cv2.boundingRect(contour)
         x, y, w, h = rect

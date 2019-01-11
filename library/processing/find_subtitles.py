@@ -4,7 +4,7 @@ import re
 import cv2
 import library.processing.simpel_video_filter as simpel_video_filter
 import library.processing.create_contours as create_contours
-
+from PIL import Image
 
 def get_all_subtitles():
     with open(Path('data/output/subtitles/subtitle_from_movie.txt'), mode='r', encoding='utf-8') as file:
@@ -12,7 +12,7 @@ def get_all_subtitles():
         return lines_from_subtitle_file_list
 
 
-def get_text_from_frame(contours, original_frame):
+def get_text_from_frame(contours, original_frame, count_frames):
     """ 
     Takes contour and the origina frame and remove noise and then calls tesseract.
     Return a list with strings, that can be subtitles or error readings.
@@ -26,7 +26,18 @@ def get_text_from_frame(contours, original_frame):
         contCount = contCount+1
         x, y, w, h = cv2.boundingRect(contour)
         crop_img = original_frame[y:y + h, x:x + w]
+
+        
+        imBigCont = Image.fromarray(crop_img)
+        imBigCont.save("data/output/frames/" +str(count_frames)+"_00"+ str(contCount)+ "_5BigContCrop" +".png") # create_contours.white_contours linje 20
+
+
         img = simpel_video_filter.clean_image(crop_img)
+
+        imClean = Image.fromarray(img)
+        imClean.save("data/output/frames/" +str(count_frames)+"_00"+ str(contCount)+ "_6clean" +".png") # create_contours.white_contours linje 20
+
+
         text = pytesseract.image_to_string(img, lang="dan")
         possible_subs.append(text)
     
@@ -57,17 +68,24 @@ def get_longest_string(list_of_texts):
     return longest_str
 
 
-def search_for_white_texts(frame):
+def search_for_white_texts(frame, count_frames):
     """ 
     Searching for a text and reads the text.
      """
     test_frame = frame.copy()
-    original_frame = frame.copy()
+    original_frame = frame.copy() 
 
-    basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]])
-    cont = create_contours.white_contours(basic)
+    basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]], count_frames)
+    imBasic = Image.fromarray(basic)
+    imBasic.save("data/output/frames/" +str(count_frames)+ "_2cv2InRange" +".png") # simpel_video_filter.basic_color_mask linje 13
+
+    cont = create_contours.white_contours(basic, count_frames)
+
+    imCont = Image.fromarray(cont)
+    imCont.save("data/output/frames/" +str(count_frames)+ "_4cont" +".png") # create_contours.white_contours linje 20
+
     contours = create_contours.create_large_contoures(cont) # if there is a text create a contour arounf it.
-    possible_subs = get_text_from_frame(contours, original_frame) # Takes the contour and read the text from what is inside the contours.
+    possible_subs = get_text_from_frame(contours, original_frame, count_frames) # Takes the contour and read the text from what is inside the contours.
     
     return possible_subs
 
