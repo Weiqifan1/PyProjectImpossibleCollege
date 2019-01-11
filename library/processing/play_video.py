@@ -46,8 +46,9 @@ def capture_video(translation_language, max_frame):
 
         if (count_frames % 50 == 0):
             cv2.imshow('frame', frame) # Show the fram on the screen.
-            im = Image.fromarray(frame)
-            im.save("data/output/frames/" +str(count_frames)+ "_1blue" +".png") # billedet gemmes i et andet 3-farve format så rød bliver blå
+            #im = Image.fromarray(frame)
+            #im.save("data/output/frames/" +str(count_frames)+ "_1blue" +".png") # billedet gemmes i et andet 3-farve format så rød bliver blå
+            cv2.imwrite("data/output/frames/" +str(count_frames)+ "_1blue" +".png", frame)
 
             speak_from_frame(frame, count_frames, translation_language) 
 

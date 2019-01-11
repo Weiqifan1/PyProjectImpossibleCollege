@@ -20,7 +20,7 @@ def run_translate(subtitle_from_movie, translation_language):
     translation = translate_client.translate(
         text,
         target_language=target)
-
+        
     # Write translated text to file.
     with open(Path("data/output/subtitles/translated_subtitles.txt"), "a+", encoding="utf-8") as file:
         subtitle_format = format(text)
