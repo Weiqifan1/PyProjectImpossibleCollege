@@ -28,7 +28,10 @@ def basic_color_mask(image, color_range_hsv, count_frames):
 
     return mask
  ```   
-  hsv
+  ##### hsv
+  ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/01basic_color_mask_COLOR_BGR2HSV/600basic_color_mask_COLOR_BGR2HSV.png)  
   
-  resultet af basic_color_white
-  
+ ##### Resultet af basic_color_white
+ ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/01c_basic_color_mask_after_inRange/600basic_color_mask_after_inRange.png)   
+ 
+ 
