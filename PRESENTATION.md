@@ -47,6 +47,21 @@ def basic_color_mask(image, color_range_hsv, count_frames):
  ##### Eksempel hvis der er flere konturer i en frame
   ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/04crop_image/650_009_crop_image.png)  
 
+#### Fjern støj
+##### Grey Scale
+  ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/05color_bgr2gray/600_grey_image.png)  
+  
+##### Resize
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/06resize/600_resize_image.png)  
+##### Dilate - Forstørrer hvide områder
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/07dilate/600_dilate_image.png)
+
+##### Erosion - Gør de hvide områder mindre
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/08erode/600_erode_image.png)
+
+##### Treshold - Hvide områder fremstår tydeligere og alt andet sort
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/09clean_img_after_threshold/600_clean_image_after_threshold.png)  
+
 
 
 
