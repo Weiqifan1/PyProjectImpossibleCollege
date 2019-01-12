@@ -77,15 +77,15 @@ def search_for_white_texts(frame, count_frames):
 
     basic = simpel_video_filter.basic_color_mask(test_frame, [[0, 0, 255], [255, 255, 255]], count_frames)
     imBasic = Image.fromarray(basic)
-    imBasic.save("data/output/frames/01basic_color_mask/" + str(count_frames)+ "basic_color_mask" +".png") # simpel_video_filter.basic_color_mask linje 13
+    imBasic.save("data/output/frames/01c_basic_color_mask_after_inRange/" + str(count_frames)+ "basic_color_mask_after_inRange" +".png") # simpel_video_filter.basic_color_mask linje 13
 
     cont = create_contours.white_contours(basic, count_frames)
 
     imCont = Image.fromarray(cont)
-    imCont.save("data/output/frames/02white_contours/" + str(count_frames)+ "white_contours" +".png") # create_contours.white_contours linje 20
+    imCont.save("data/output/frames/03white_contours_find_contours/" + str(count_frames)+ "find_contours" +".png") # create_contours.white_contours linje 20
 
-    contours = create_contours.create_large_contoures(cont) # if there is a text create a contour arounf it.
-    print(type(contours))
+    contours = create_contours.create_large_contoures(cont, count_frames) # if there is a text create a contour arounf it.
+    #print(type(contours))
     #img_large_contours = Image(contours)
     #img_large_contours.save("data/output/frames/03white_large_contours" + str(count_frames)+ "white_contours" +".png")
     #cv2.imwrite("data/output/frames/03white_large_contours/" + str(count_frames)+ "white_contours" +".png", img_large_contours)

@@ -14,8 +14,12 @@ def white_contours(black_white_frame, count_frames):
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     
-    imBasic = Image.fromarray(mask)
-    imBasic.save("data/output/frames/02x_find_contours/" +str(count_frames)+ "_find_contours" +".png") 
+    # imBasic = Image.fromarray(mask)
+    # imBasic.save("data/output/frames/02white_contours_threshold/" +str(count_frames)+ "_white_contours_threshold" +".png") 
+
+    # contours - list - Skrives ud i find subtitles.
+    # imBasic = Image.fromarray(contours)
+    # imBasic.save("data/output/frames/03white_contours_find_contours/" +str(count_frames)+ "_white_contours_find_contours" +".png") 
 
     for contour in contours:
         rect = cv2.boundingRect(contour)
@@ -32,12 +36,15 @@ def white_contours(black_white_frame, count_frames):
     return basic2
 
 
-def create_large_contoures(white_contours):
+def create_large_contoures(white_contours, count_frames):
     """ 
      Create a large contour around all the white area so we can se that it's a line.
      """
     mask = white_contours.copy()
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    # imBasic = Image.fromarray(contours)
+    # imBasic.save("data/output/frames/a/" +str(count_frames)+ "_white_contours_find_contours" +".png") 
 
     return contours 

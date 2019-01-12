@@ -7,6 +7,9 @@ def basic_color_mask(image, color_range_hsv, count_frames):
     Create contrast between white and what is not white in a picture.
      """
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    # 01 color_BGR2HSV
+    imBasic = Image.fromarray(hsv)
+    imBasic.save("data/output/frames/01basic_color_mask_COLOR_BGR2HSV/" + str(count_frames)+ "basic_color_mask_COLOR_BGR2HSV" +".png")
 
     lower_white = np.array(color_range_hsv[0], dtype=np.uint8)
     upper_white = np.array(color_range_hsv[1], dtype=np.uint8)
