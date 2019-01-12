@@ -48,6 +48,23 @@ def basic_color_mask(image, color_range_hsv, count_frames):
   ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/04crop_image/650_009_crop_image.png)  
 
 #### Fjern støj
+```
+def clean_image(image, count_frames):
+    """ 
+    Remove noise from a small part of the picture. In the lower part of the picture where the subtitle is.
+     """
+    img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) # grey
+
+    img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC) # resize - more pixels to work with.
+    
+    kernel = np.ones((2, 2), np.uint8)
+    img = cv2.dilate(img, kernel, iterations=1)
+    
+    img = cv2.erode(img, kernel, iterations=1)
+    img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    
+    return img
+```
 ##### Grey Scale
   ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/05color_bgr2gray/600_grey_image.png)  
   
