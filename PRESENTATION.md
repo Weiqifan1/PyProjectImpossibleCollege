@@ -34,4 +34,21 @@ def basic_color_mask(image, color_range_hsv, count_frames):
  ##### Resultet af basic_color_white
  ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/01c_basic_color_mask_after_inRange/600basic_color_mask_after_inRange.png)   
  
+ ##### Find hvide kontourer
+  ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/03white_contours_find_contours/600find_contours.png)   
+  
+ ##### Eksempel på flere konturer i en frame
+ ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/03white_contours_find_contours/650find_contours.png)  
  
+##### Cropper konturene i framen
+ ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/04crop_image/600_001_crop_image.png
+ )  
+ 
+ ##### Eksempel hvis der er flere konturer i en frame
+  ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/04crop_image/650_009_crop_image.png)  
+
+
+
+
+
+
