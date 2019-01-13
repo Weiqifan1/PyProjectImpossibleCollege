@@ -28,10 +28,13 @@ def white_contours(black_white_frame, count_frames):
         y = y - 4
         w = w + 8
         h = h + 8
-        cv2.rectangle(basic2, (x, y), (x + w, y + h), (255, 255, 255), 1) # fill the rectangles with white
+        a = cv2.rectangle(basic2, (x, y), (x + w, y + h), (255, 255, 255), 1) # fill the rectangles with white
+        #cv2.imshow("a", a)
+
         mid_left = (x, round(y + (h/2)))
         mid_right = (x + w, round(y + (h/2)))
         cv2.line(basic2, mid_left, mid_right, (255, 255, 255), h)
+        #cv2.imshow("basic2", basic2)
 
     return basic2
 
@@ -43,7 +46,7 @@ def create_large_contoures(white_contours, count_frames):
     mask = white_contours.copy()
     _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-
+    
     # imBasic = Image.fromarray(contours)
     # imBasic.save("data/output/frames/a/" +str(count_frames)+ "_white_contours_find_contours" +".png") 
 
