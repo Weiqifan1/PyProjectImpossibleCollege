@@ -81,8 +81,11 @@ def clean_image(image, count_frames):
 
 ### Tekst der læses forkert
 ##### Læses rigtigt
-![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/saveframes/data/output/frames/1050_001_6clean.png)
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/saveframes/data/output/frames/1050_001_6clean.png)  
 
 ##### Læses forkert
-![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/saveframes/data/output/frames/1000_001_6clean.png)
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/saveframes/data/output/frames/1000_001_6clean.png)  
+
+##### Oversættes til
+ tesseract: Hvor vil du hen? [når ro sale i EET lkg   
 
