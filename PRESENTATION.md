@@ -79,8 +79,10 @@ def clean_image(image, count_frames):
 ##### Treshold - Hvide områder fremstår tydeligere og alt andet sort
 ![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/presentation/data/output/frames/09clean_img_after_threshold/600_clean_image_after_threshold.png)  
 
+### Tekst der læses forkert
+##### Læses rigtigt
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/saveframes/data/output/frames/1050_001_6clean.png)
 
-
-
-
+##### Læses forkert
+![alt text](https://github.com/Weiqifan1/PyProjectImpossibleCollege/blob/saveframes/data/output/frames/1000_001_6clean.png)
 
